@@ -1,0 +1,43 @@
+/* Previous Area*/
+
+.prev-area .prev-item {
+	border: 2px solid var(--active);
+	background-color: var(--primary);
+	border-radius: 20px;
+	padding: 20px 0;
+	margin: 20px 40px;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+.prev-area .prev-item h3,
+.prev-area .prev-item h4 {
+	font-size: 18px;
+	color: var(--active);
+	text-transform: capitalize;
+}
+
+.prev-area .prev-item .prev-item-id {
+	text-transform: none;
+	font-size: 24px;
+	color: var(--text);
+	font-weight: 700;
+}
+.prev-area .prev-details {
+	margin-top: 30px;
+}
+.prev-area .prev-details .prev-details-btn {
+	padding: 10px 30px;
+	border-radius: 10px;
+	font-size: 20px;
+	text-transform: capitalize;
+	color: var(--text);
+	background-color: var(--active);
+	border: 2px solid transparent;
+}
+.prev-area .prev-details .prev-details-btn:hover {
+	font-weight: 700;
+	background-color: var(--text);
+	color: var(--active);
+	border: 2px solid var(--active);
+}

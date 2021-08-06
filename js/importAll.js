@@ -14,5 +14,5 @@ document.write('<script type="text/javascript" src="js/users.js" ></script>'
 );
 document.write('<script type="text/javascript" src="js/queues.js" ></script>'
 );
-
-// document.write('<script type="text/javascript" src="js/key.js" ></script>');
+document.write('<script type="text/javascript" src="js/key.js" ></script>'
+);

@@ -32,8 +32,6 @@ function createUser() {
 	usersRef.child(email)
 		.set({
 			name: displayName,
-			previous: "null",
-			invited: "null",
 			photoURL: firebase.auth().currentUser.photoURL,
 		});
 }
@@ -123,7 +121,7 @@ function initApp() {
 			let email =filterPath(firebase.auth().currentUser.email);
 			
 			usersRef
-				.on("value", function (snapshot) {
+				.once("value", function (snapshot) {
 					if (snapshot.hasChild(email)) {
 						updateUser(firebase);
 					} else {

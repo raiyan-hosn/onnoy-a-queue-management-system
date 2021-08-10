@@ -199,6 +199,15 @@ label #sb-cancel {
 .profile-icon .profile-nav-options ul li img {
   transform: scale(1.5);
 }
+
+.user-img-nav {
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 60px;
+  width: 60px;
+}
+
 /* media query for show and hide time  */
 @media screen and (max-width: 600px) {
   .time {

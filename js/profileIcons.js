@@ -1,40 +1,40 @@
-
 // Login Function
 const profileIcon = document.querySelector(".profile-icon");
 const profileIconButton = document.createElement("button");
-profileIconButton.id = "signInFromHome";
+profileIconButton.classList.add("signInProfileNav");
 
 profileIconButton.addEventListener("click", function () {
   signInWithGoogle();
 });
-function creatingProfileIcon(){
-  let email = filterPath(firebase.auth().currentUser.email);
-  usersRef
-    .child(email)
-    .on("value", function (snapshot) {
 
-      if (snapshot.val() == null) {
-        console.log("No photo found for email: " + antiFilterPath(email));
-      } else {
-        let imageSrc = snapshot.val().photoURL;
-        let profileImage = document.createElement("img");
-        profileImage.src = imageSrc;
-        profileIconButton.appendChild(profileImage);
-        profileIconButton.style.border = "none";
-        profileIconButton.style.borderRadius = "50%";
-        profileIcon.style.height = "60px";
-        profileIcon.style.width = "60px";
-        profileIcon.style.position = "relative";
-        profileIcon.appendChild(profileIconButton);
-      }
-    });
+// SignIn Button Handler
+
+function creatingProfileIcon() {
+  let email = filterPath(firebase.auth().currentUser.email);
+  usersRef.child(email).on("value", function (snapshot) {
+    if (snapshot.val() == null) {
+      console.log("No photo found for email: " + antiFilterPath(email));
+    } else {
+      let imageSrc = snapshot.val().photoURL;
+      let profileImage = document.createElement("img");
+      profileIconButton.classList.add("user-img-nav");
+      profileImage.src = imageSrc;
+      profileIconButton.appendChild(profileImage);
+      profileIcon.appendChild(profileIconButton);
+    }
+  });
 }
-function creatingSignInBtn(){
+function creatingSignInBtn() {
   profileIconButton.innerText = "Sign In";
   profileIconButton.classList.add("button");
   profileIcon.appendChild(profileIconButton);
 }
 
+// Profile Nav Generator
+
+profileIconButton.addEventListener("click", function () {
+  generateProfileNavs();
+});
 
 function generateProfileNavs() {
   // profile menu
@@ -51,5 +51,3 @@ function generateProfileNavs() {
     </ul>`;
   profileIcon.appendChild(profileNavs);
 }
-
-

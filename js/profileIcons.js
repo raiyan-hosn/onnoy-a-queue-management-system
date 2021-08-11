@@ -38,16 +38,23 @@ profileIconButton.addEventListener("click", function () {
 
 function generateProfileNavs() {
   // profile menu
-
-  const largeImg = document.createElement("img");
-  largeImg.src = getUserPhotoURL(firebase.auth().currentUser.email);
-  console.log(largeImg);
-  const profileNavs = document.createElement("div");
-  profileNavs.classList.add("profile-nav-options");
-  profileNavs.innerHTML = `<ul class="p-0 d-flex flex-column align-items-center">
+  let email = filterPath(firebase.auth().currentUser.email);
+  usersRef.child(email).on("value", function (snapshot) {
+    if (snapshot.val() == null) {
+      console.log("No photo found for email: " + antiFilterPath(email));
+    } else {
+      let userName = getUserName();
+      const largeImg = document.createElement("img");
+      largeImg.src = snapshot.val().photoURL;
+      console.log(largeImg);
+      const profileNavs = document.createElement("div");
+      profileNavs.classList.add("profile-nav-options");
+      profileNavs.innerHTML = `<ul class="p-0 d-flex flex-column align-items-center">
       <li><img src="${largeImg.src}"></li>
-      <li><h5>Name of Owner</h5></li>
-      <li><button class="button">Sign Out</button></li>
+      <li><h5>${userName}</h5></li>
+      <li><button class="button" onclick="signOut()">Sign Out</button></li>
     </ul>`;
-  profileIcon.appendChild(profileNavs);
+      profileIcon.appendChild(profileNavs);
+    }
+  });
 }

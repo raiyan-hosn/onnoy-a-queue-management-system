@@ -15,10 +15,9 @@ function creatingProfileIcon() {
     if (snapshot.val() == null) {
       console.log("No photo found for email: " + antiFilterPath(email));
     } else {
-      let imageSrc = snapshot.val().photoURL;
       let profileImage = document.createElement("img");
       profileIconButton.classList.add("user-img-nav");
-      profileImage.src = imageSrc;
+      profileImage.src = snapshot.val().photoURL;
       profileIconButton.appendChild(profileImage);
       profileIcon.appendChild(profileIconButton);
     }

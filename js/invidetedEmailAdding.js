@@ -48,13 +48,16 @@ function addInvitedEmail(event) {
 
   invitedEmailInput.value = "";
 }
-// TODO: Delete Button Is not working
+
 function deleteCheck(e) {
   const item = e.target;
   if (item.classList[0] === "trash-btn") {
     const todo = item.parentElement;
-    todo.addEventListener("click", function () {
-      todo.remove();
-    });
+    todo.addEventListener("click",deleteTodo(todo));
   }
+}
+function deleteTodo(todo)
+{
+  console.log(todo);
+  todo.remove();
 }

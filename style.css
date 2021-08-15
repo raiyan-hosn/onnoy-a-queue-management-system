@@ -57,6 +57,17 @@ body {
   font-weight: 700;
 }
 
+.form-control,
+.form-select {
+  border: 1px solid #3aafa9;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #3aafa9;
+  box-shadow: 0 0 0 0.25rem rgba(58, 175, 169, 0.25);
+}
+
 /****Menu Area*****/
 .menu-area {
   display: flex;
@@ -229,40 +240,4 @@ label #sb-cancel {
 .home-area p {
   font-size: 1.3em;
   color: #34495e;
-}
-
-/* style for create - invitedEmailList */
-.invited-email-container {
-  max-width: 650px;
-}
-.invited-email-list .trash-btn {
-  background-color: #e74c3c;
-  cursor: pointer;
-  border: none;
-  padding: 5px;
-  height: 40px;
-  width: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.invited-email-list .trash-btn i {
-  font-size: 20px;
-  color: #fff;
-  pointer-events: none;
-}
-
-#invitedEmailButton {
-  font-weight: 400;
-  padding: 8px 20px;
-  background-color: var(--primary);
-  border: 2px solid transparent;
-  font-size: 1.5em;
-  transition: 0.5s;
-}
-#invitedEmailButton:hover {
-  border: 2px solid #171717;
-  background-color: #ffffff;
-  color: #171717;
-  font-weight: 700;
 }

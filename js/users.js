@@ -64,7 +64,6 @@ function getUserName() {
 }
 function getUserPhotoURL(email) {
 	email = filterPath(email);
-	var photoURL;
 	usersRef
 		.child(email)
 		.on("value", function (snapshot) {

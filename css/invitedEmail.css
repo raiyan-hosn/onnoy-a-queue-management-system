@@ -39,6 +39,9 @@
   width: 70px;
   cursor: pointer;
 }
+.invitedEmail-item-trash i {
+  pointer-events: none;
+}
 
 /* 
 

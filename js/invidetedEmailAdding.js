@@ -11,7 +11,7 @@ invitedEmailButton.classList.add("button");
 
 invitedEmailButton.addEventListener("click", function () {
   invitedEmails.push([invitedEmailInput.value, invitedEmailType.value]);
-  addPerson(invitedEmailInput.value,invitedEmailType.value);
+  addPerson(invitedEmailInput.value, invitedEmailType.value);
   invitedEmailInput.value = "";
   invitedEmailType.value = "Desk";
 });
@@ -23,7 +23,7 @@ invitedEmailButton.addEventListener("click", function () {
 const inviteEmailArea = document.querySelector("#invited-eamil-area");
 
 // logical part
-function addPerson(email, type){
+function addPerson(email, type) {
   const createList = document.createElement("ul");
   const listItem = document.createElement("li");
   const listItemDiv = document.createElement("div");
@@ -62,23 +62,44 @@ function addPerson(email, type){
   listItemDiv.appendChild(listItemInfoDiv);
 
   // trash button adding ...
+  listItemTrashIcon.classList.add("trash");
   listItemTrashIcon.classList.add("fas");
   listItemTrashIcon.classList.add("fa-times");
+  listItemTrashDiv.classList.add("trash");
   listItemTrashDiv.classList.add("invitedEmail-item-trash");
   listItemTrashDiv.classList.add("rounded-circle");
   listItemTrashDiv.appendChild(listItemTrashIcon);
+  listItem.addEventListener("click", function (event) {
+    if (event.target.classList[0] === "trash") {
+      const targatedLi = event.target.parentElement;
+      targatedLi.remove();
+    }
+  });
 
+  // trash button fuction
+
+  // appending all in the ul
   listItem.appendChild(listItemDiv);
   listItem.appendChild(listItemTrashDiv);
   createList.appendChild(listItem);
   inviteEmailArea.appendChild(createList);
 }
+
+function deleteCheck(e) {
+  const item = e.target;
+  if (item.classList[0] === "trash") {
+    const myli = item.parentElement;
+    console.log(myli);
+  }
+}
+
 if (invitedEmails.length == 0) {
   const noOneInvited = document.createElement("div");
   noOneInvited.innerText = "Currently no one is invited to this queue";
   noOneInvited.classList.add("no-one-invited");
   inviteEmailArea.appendChild(noOneInvited);
-} else {/*
+} else {
+  /*
   const createList = document.createElement("ul");
 
   for (let i = 0; i < invitedEmails.length; i++) {

@@ -35,16 +35,18 @@ function addPerson(email, type) {
   listItem.classList.add("mt-4");
   // adding bootstrap class and custom class on listItemDiv
   listItemDiv.classList.add("d-flex");
-  listItemDiv.classList.add("justify-content-center");
+  listItemDiv.classList.add("justify-content-between");
   listItemDiv.classList.add("align-items-center");
   listItemDiv.classList.add("invitedEmail-item-info");
 
   const listItemImageDiv = document.createElement("div");
   const listItemInfoDiv = document.createElement("div");
+  const listItemInfoTypeDiv = document.createElement("div");
 
   const listItemImage = document.createElement("img");
+  const listItemInfoEmailName = document.createElement("h5");
   const listItemInfoEmail = document.createElement("h6");
-  const listItemInfoType = document.createElement("h6");
+  const listItemInfoType = document.createElement("h5");
   const listItemTrashIcon = document.createElement("i");
 
   // image link will give by rayhan
@@ -55,11 +57,14 @@ function addPerson(email, type) {
   listItemDiv.appendChild(listItemImageDiv);
 
   // Info collecting
+  listItemInfoEmailName.innerText = "Def Name";
   listItemInfoEmail.innerText = email;
   listItemInfoType.innerText = type;
+  listItemInfoDiv.appendChild(listItemInfoEmailName);
   listItemInfoDiv.appendChild(listItemInfoEmail);
-  listItemInfoDiv.appendChild(listItemInfoType);
+  listItemInfoTypeDiv.appendChild(listItemInfoType);
   listItemDiv.appendChild(listItemInfoDiv);
+  listItemDiv.appendChild(listItemInfoTypeDiv);
 
   // trash button adding ...
   listItemTrashIcon.classList.add("trash");
@@ -83,14 +88,6 @@ function addPerson(email, type) {
   listItem.appendChild(listItemTrashDiv);
   createList.appendChild(listItem);
   inviteEmailArea.appendChild(createList);
-}
-
-function deleteCheck(e) {
-  const item = e.target;
-  if (item.classList[0] === "trash") {
-    const myli = item.parentElement;
-    console.log(myli);
-  }
 }
 
 if (invitedEmails.length == 0) {

@@ -29,6 +29,7 @@
 		<!--CSS Files-->
 		<link rel="stylesheet" href="css/prev.css" />
 		<link rel="stylesheet" href="css/invitedEmail.css">
+		<link rel="stylesheet" href="css/mainQueue.css">
 		<link rel="stylesheet" href="style.css" />
 
 		<title>Onny - A queue organizer</title>
@@ -45,38 +46,38 @@
 				</div>
 				<div id="sidebar" class="sidebar hide">
 					<header><h2>Onnay</h2></header>
-					<ul>
-						<li id="home-menu">
-							<a href="#"> <i class="fa fa-home"></i>home</a>
+					<ul id="nav-menu">
+						<li>
+							<a  id="home-menu" href="#"> <i class="fa fa-home"></i>home</a>
 						</li>
-						<li id="profile-menu">
-							<a href="#"> <i class="fa fa-user"></i>profile </a>
+						<li>
+							<a  id="profile-menu" href="#"> <i class="fa fa-user"></i>profile </a>
 						</li>
-						<li id="create-menu">
-							<a href="#">
+						<li>
+							<a id="create-menu" href="#">
 								<i class="fas fa-plus"></i></i>Create
 							</a>
 						</li>
-						<li id="join-menu">
-							<a href="#">
+						<li>
+							<a id="join-menu" href="#">
 								<i class="fas fa-sign-in-alt"></i></i>Join
 							</a>
 						</li>
-						<li id="prev-menu">
-							<a href="#">
+						<li>
+							<a id="prev-menu" href="#">
 								<i class="fa fa-history"></i>Previous
 							</a>
 						</li>
-						<li id="invited-menu">
-							<a href="#">
+						<li>
+							<a id="invited-menu" href="#">
 								<i class="fa fa-user-plus"></i>Invitations
 							</a>
 						</li>
-						<li id="report-menu">
-							<a href="#"> <i class="fa fa-bug"></i>Report </a>
+						<li>
+							<a id="report-menu" href="#"> <i class="fa fa-bug"></i>Report </a>
 						</li>
-						<li id="about-menu">
-							<a href="#"> <i class="fa fa-code"></i>About </a>
+						<li>
+							<a id="about-menu" href="#"> <i class="fa fa-code"></i>About </a>
 						</li>
 					</ul>
 				</div>
@@ -91,7 +92,7 @@
 			</div>
 		</nav>
 		<!--Home-->
-		<section class="home-area hide" id="home">
+		<section class="home-area container show" id="home">
 			<div class="container text-center">
 				<h2>Organize Your Queue.</h2>
 				<h2>Now free for everyone.</h2>
@@ -112,13 +113,15 @@
 		</section>
 
 		<!--Profile-->
-		<section id="profile" class="profile-area hide container">
+		<section id="profile" class="profile-area container hide">
 			<h2>Profile</h2>
 		</section>
 
+		
+
 		<!--Create-->
 
-		<section id="create" class="create-area container">
+		<section id="create" class="create-area container hide">
 			<h2>Create</h2>
 			<form class="col-md-6 mx-auto  text-center">
 				<div class="mb-3">
@@ -152,11 +155,32 @@
 			
 		</section>
 
+		<!--join-->
+		<section id="join" class="prev-area container hide">
+			<h2>Join</h2>
+
+			<div id="main-queue">
+
+			</div>
+		</section>
 		<!--Previous-->
 		<section id="previous" class="prev-area container hide">
 			<h2>Previous Queue</h2>
 			<div id="prev-container" class="row"></div>
 		</section>
+		<!--invitation-->
+		<section id="invitation" class="prev-area container hide">
+			<h2>Invitations</h2>
+		</section>
+		<!--report-->
+		<section id="report" class="prev-area container hide">
+			<h2>Report</h2>
+		</section>
+		<!--about-->
+		<section id="about" class="prev-area container hide">
+			<h2>About</h2>
+		</section>
+		
 
 		<!--Bootstrap JS CDN-->
 		<script
@@ -173,5 +197,6 @@
 		<script src="js/profileIcons.js"></script>
 		<script src="js/profile.js"></script>
 		<script src="js/invidetedEmailAdding.js"></script>
+		<script src="js/main.js"></script>
 	</body>
 </html>

@@ -1,115 +1,67 @@
 // variable and selectors
 
-invitedEmails = [];
+const invitedEmails = [];
 
 // invited email adder button all workds
 const invitedEmailInput = document.getElementById("invitedEmailInput");
 const invitedEmailButton = document.getElementById("invitedEmailButton");
 const invitedEmailType = document.getElementById("invitedEmailType");
+const createList = document.createElement("ul");
+const inviteEmailArea = document.querySelector("#invited-eamil-area");
 
 invitedEmailButton.classList.add("button");
 
 invitedEmailButton.addEventListener("click", function () {
-  let email= invitedEmailInput.value;
-  let type= invitedEmailType.value;
-
-  usersRef
-		.child(filterPath(email))
-		.once("value", function (snapshot) {
-
-			if (snapshot.val() == null) {
-				console.log("No user found for this email");
-			
-			} else {
-        invitedEmails.push([invitedEmailInput.value, invitedEmailType.value]);
-				let photoURL = snapshot.val().photoURL;
-        let name= snapshot.val().name;
-				
-
-        const createList = document.createElement("ul");
-        const listItem = document.createElement("li");
-        const listItemDiv = document.createElement("div");
-        const listItemTrashDiv = document.createElement("div");
-        // adding bootstrap class on listItemDiv
-        listItem.classList.add("d-flex");
-        listItem.classList.add("justify-content-center");
-        // listItem.classList.add("align-items-center");
-        listItem.classList.add("mt-4");
-        // adding bootstrap class and custom class on listItemDiv
-        listItemDiv.classList.add("d-flex");
-        listItemDiv.classList.add("justify-content-between");
-        listItemDiv.classList.add("align-items-center");
-        listItemDiv.classList.add("invitedEmail-item-info");
-      
-        const listItemImageDiv = document.createElement("div");
-        const listItemInfoDiv = document.createElement("div");
-        const listItemInfoTypeDiv = document.createElement("div");
-      
-        const listItemImage = document.createElement("img");
-        const listItemInfoEmailName = document.createElement("h5");
-        const listItemInfoEmail = document.createElement("h6");
-        const listItemInfoType = document.createElement("h5");
-        const listItemTrashIcon = document.createElement("i");
-      
-        // image link will give by rayhan
-        // setting image for now
-        listItemImage.src = photoURL;
-        listItemImageDiv.appendChild(listItemImage);
-        listItemImageDiv.classList.add("invitedEmail-item-info-img");
-        listItemDiv.appendChild(listItemImageDiv);
-      
-        // Info collecting
-        listItemInfoEmailName.innerText = name;
-        listItemInfoEmail.innerText = email;
-        listItemInfoType.innerText = type;
-        listItemInfoDiv.appendChild(listItemInfoEmailName);
-        listItemInfoDiv.appendChild(listItemInfoEmail);
-        listItemInfoTypeDiv.appendChild(listItemInfoType);
-        listItemDiv.appendChild(listItemInfoDiv);
-        listItemDiv.appendChild(listItemInfoTypeDiv);
-      
-        // trash button adding ...
-        listItemTrashIcon.classList.add("trash");
-        listItemTrashIcon.classList.add("fas");
-        listItemTrashIcon.classList.add("fa-times");
-        listItemTrashDiv.classList.add("trash");
-        listItemTrashDiv.classList.add("invitedEmail-item-trash");
-        listItemTrashDiv.classList.add("rounded-circle");
-        listItemTrashDiv.appendChild(listItemTrashIcon);
-        listItem.addEventListener("click", function (event) {
-          if (event.target.classList[0] === "trash") {
-            const targatedLi = event.target.parentElement;
-            targatedLi.remove();
-          }
-        });
-      
-        // trash button fuction
-      
-        // appending all in the ul
-        listItem.appendChild(listItemDiv);
-        listItem.appendChild(listItemTrashDiv);
-        createList.appendChild(listItem);
-        inviteEmailArea.appendChild(createList);
-        invitedEmailInput.value = "";
-        invitedEmailType.value = "Desk";
-			}
-		});
-
- 
+  if (invitedEmailInput.value !== "") {
+    invitedEmails.push([invitedEmailInput.value, invitedEmailType.value]);
+  }
+  invitedEmailInput.value = "";
+  invitedEmailType.value = "Desk";
+  createList.innerHTML = "";
+  invitedEmails.map((person) => {
+    newAddPerson(person[0], person[1]);
+  });
+  inviteEmailArea.classList.add("mt-3");
+  inviteEmailArea.appendChild(createList);
 });
 
-//invited email adder button works ends here...
+// new addPerson fuction
 
-// invited email list all works start from here...
+const newAddPerson = (email, type) => {
+  const listItem = document.createElement("li");
+  listItem.classList.add("row");
+  listItem.classList.add("justify-content-center");
+  listItem.classList.add("align-items-center");
+  listItem.classList.add("mx-auto");
+  listItem.classList.add("my-2");
 
-const inviteEmailArea = document.querySelector("#invited-eamil-area");
+  listItem.innerHTML = `
+    <div class="row col m-0 invitedEmail-item-info d-flex justify-content-center align-items-center">
+      <div class="invitedEmail-item-info-img col-3">
+        <img src=""/>
+      </div>
+      <div class="col-6">
+        <h5>invited person name</h5>
+        <h6>${email}</h6>
+      </div>
+      <div class="col-3">
+        <h5>${type}</h5>
+      </div>
+    </div>
 
-if (invitedEmails.length == 0) {
-  const noOneInvited = document.createElement("div");
-  noOneInvited.innerText = "Currently no one is invited to this queue";
-  noOneInvited.classList.add("no-one-invited");
-  inviteEmailArea.appendChild(noOneInvited);
-} else {
-  
-}
+    // trash button 
 
+    <div class="trash invitedEmail-item-trash rounded-circle col-3">
+      <i class="trash fas fa-times"></i>
+    </div>
+  `;
+
+  listItem.addEventListener("click", function (event) {
+    if (event.target.classList[0] === "trash") {
+      const targatedLi = event.target.parentElement;
+      targatedLi.remove();
+    }
+  });
+
+  createList.appendChild(listItem);
+};

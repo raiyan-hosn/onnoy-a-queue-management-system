@@ -2,15 +2,12 @@
   padding: 8px 20px;
 }
 
-.no-one-invited {
-  color: #ff16169f;
-  font-size: 20px;
-  margin-top: 30px;
-}
-
 #invited-eamil-area ul {
   color: white;
   list-style: none;
+  padding: 0;
+}
+#invited-eamil-area ul li {
   padding: 0;
 }
 .invitedEmail-item-info {
@@ -18,7 +15,7 @@
   padding: 8px 15px;
   border-radius: 20px;
   margin-right: 15px;
-  width: 300px;
+  min-width: 300px;
   text-align: left;
 }
 
@@ -36,8 +33,8 @@
   background-color: red;
   color: white;
   font-size: 30px;
-  height: auto;
-  width: 70px;
+  height: 50px;
+  width: 50px;
   cursor: pointer;
 }
 .invitedEmail-item-trash i {

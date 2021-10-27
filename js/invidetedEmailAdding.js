@@ -15,7 +15,7 @@ invitedEmailButton.addEventListener("click", function () {
   if (invitedEmailInput.value !== "") {
     invitedEmails.push([invitedEmailInput.value, invitedEmailType.value]);
   }
-  
+
   invitedEmailInput.value = "";
   invitedEmailType.value = "Desk";
   createList.innerHTML = "";
@@ -29,23 +29,19 @@ invitedEmailButton.addEventListener("click", function () {
 // new addPerson fuction
 
 const newAddPerson = (email, type) => {
-  
-  usersRef.child(filterPath(email))
-          .once("value",function(snapshot){
-            if(snapshot.val()==null){
+  usersRef.child(filterPath(email)).once("value", function (snapshot) {
+    if (snapshot.val() == null) {
+    } else {
+      let photoURL = snapshot.val().photoURL;
+      let name = snapshot.val().name;
+      const listItem = document.createElement("li");
+      listItem.classList.add("row");
+      listItem.classList.add("justify-content-center");
+      listItem.classList.add("align-items-center");
+      listItem.classList.add("mx-auto");
+      listItem.classList.add("my-2");
 
-            }
-            else{
-              let photoURL = snapshot.val().photoURL;
-              let name= snapshot.val().name;
-              const listItem = document.createElement("li");
-              listItem.classList.add("row");
-              listItem.classList.add("justify-content-center");
-              listItem.classList.add("align-items-center");
-              listItem.classList.add("mx-auto");
-              listItem.classList.add("my-2");
-            
-              listItem.innerHTML = `
+      listItem.innerHTML = `
                 <div class="row col m-0 invitedEmail-item-info d-flex justify-content-center align-items-center">
                   <div class="invitedEmail-item-info-img col-3">
                     <img src="${photoURL}"/>
@@ -65,18 +61,15 @@ const newAddPerson = (email, type) => {
                   <i class="trash fas fa-times"></i>
                 </div>
               `;
-            
-              listItem.addEventListener("click", function (event) {
-                if (event.target.classList[0] === "trash") {
-                  const targatedLi = event.target.parentElement;
-                  targatedLi.remove();
-                }
-              });
-            
-              createList.appendChild(listItem);
 
-            }
-          });
+      listItem.addEventListener("click", function (event) {
+        if (event.target.classList[0] === "trash") {
+          const targatedLi = event.target.parentElement;
+          targatedLi.remove();
+        }
+      });
 
- 
+      createList.appendChild(listItem);
+    }
+  });
 };

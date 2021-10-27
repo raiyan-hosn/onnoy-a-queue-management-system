@@ -19,8 +19,8 @@ invitedEmailButton.addEventListener("click", function () {
   invitedEmailInput.value = "";
   invitedEmailType.value = "Desk";
   createList.innerHTML = "";
-  invitedEmails.map((person) => {
-    newAddPerson(person[0], person[1]);
+  invitedEmails.map((person, index) => {
+    newAddPerson(person[0], person[1], index);
   });
   inviteEmailArea.classList.add("mt-3");
   inviteEmailArea.appendChild(createList);
@@ -28,13 +28,14 @@ invitedEmailButton.addEventListener("click", function () {
 
 // new addPerson fuction
 
-const newAddPerson = (email, type) => {
+const newAddPerson = (email, type, index) => {
   usersRef.child(filterPath(email)).once("value", function (snapshot) {
     if (snapshot.val() == null) {
     } else {
       let photoURL = snapshot.val().photoURL;
       let name = snapshot.val().name;
       const listItem = document.createElement("li");
+      listItem.id = index;
       listItem.classList.add("row");
       listItem.classList.add("justify-content-center");
       listItem.classList.add("align-items-center");
@@ -65,6 +66,8 @@ const newAddPerson = (email, type) => {
       listItem.addEventListener("click", function (event) {
         if (event.target.classList[0] === "trash") {
           const targatedLi = event.target.parentElement;
+          invitedEmails.splice(targatedLi.id, 1);
+          console.log(invitedEmails);
           targatedLi.remove();
         }
       });

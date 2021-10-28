@@ -76,3 +76,25 @@ const newAddPerson = (email, type, index) => {
     }
   });
 };
+
+const handleCreateQueue = () => {
+  const queueTitle = document.getElementById("queueTitle").value;
+  const queueDate = document.getElementById("create-date").value;
+  const queueDeskType = document.getElementById("queue-desk-type").value;
+  const currentTime = new Date();
+
+  // newQueue is the your queue info, do whatever you want to do
+  const newQueue = {
+    queueTitle,
+    queueDate,
+    queueDeskType,
+    currentTime,
+    invitedEmails,
+  };
+
+  //Clear all field
+  queueTitle.value = "";
+  queueDate.value = "";
+  queueDeskType.value = "desk-record";
+  invitedEmails.splice(0, invitedEmails.length);
+};

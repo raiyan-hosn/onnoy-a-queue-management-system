@@ -1,6 +1,11 @@
 var queuesRef = firebase.database().ref("queues");
 
-function createQueue(id, tittle, time, type, inviteList) {
+function createQueue(newQueue) {
+    let id= createKey();
+    let tittle= newQueue.queueTitle;
+    let time=newQueue.queueDate;
+    let type=newQueue.queueDeskType;
+    let inviteList=newQueue.invitedEmails;
     let owner = filterPath(getUserEmail());
     if (!isSignedIn()) {
         return;

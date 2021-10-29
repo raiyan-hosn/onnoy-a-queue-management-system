@@ -91,7 +91,7 @@ const handleCreateQueue = () => {
     currentTime,
     invitedEmails,
   };
-
+  createQueue(newQueue);
   //Clear all field
   queueTitle.value = "";
   queueDate.value = "";

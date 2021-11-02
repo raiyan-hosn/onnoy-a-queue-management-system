@@ -11,7 +11,7 @@ profileIconButton.addEventListener("click", function () {
 
 function creatingProfileIcon() {
   let email = filterPath(firebase.auth().currentUser.email);
-  usersRef.child(email).once("value", function (snapshot) {
+  usersRef.child(email).on("value", function (snapshot) {
     if (snapshot.val() == null) {
       console.log("No photo found for email: " + antiFilterPath(email));
     } else {
@@ -38,7 +38,7 @@ profileIconButton.addEventListener("click", function () {
 function generateProfileNavs() {
   // profile menu
   let email = filterPath(firebase.auth().currentUser.email);
-  usersRef.child(email).once("value", function (snapshot) {
+  usersRef.child(email).on("value", function (snapshot) {
     if (snapshot.val() == null) {
       console.log("No photo found for email: " + antiFilterPath(email));
     } else {

@@ -55,9 +55,6 @@ const newAddPerson = (email, type, index) => {
                     <h5>${type}</h5>
                   </div>
                 </div>
-            
-                // trash button 
-            
                 <div class="trash invitedEmail-item-trash rounded-circle col-3">
                   <i class="trash fas fa-times"></i>
                 </div>
@@ -91,7 +88,7 @@ const handleCreateQueue = () => {
     currentTime,
     invitedEmails,
   };
-  createQueue(newQueue);
+
   //Clear all field
   queueTitle.value = "";
   queueDate.value = "";

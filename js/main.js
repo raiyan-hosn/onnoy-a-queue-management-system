@@ -22,17 +22,23 @@ mainQueue.innerHTML = `
                                     <img src="https://img.freepik.com/free-vector/vector-qr-code-sample-isolated_255502-275.jpg?size=338&ext=jpg" alt="" />
                                 </div>
                                 <div class="this-queue-info col-8">
-                                    <h4>This Queue Title This Queue Title</h4>
-                                    <h3 class="fw-bolder text-secondary">abc-def-ghij</h3>
+                                    <h5>This Queue Title</h5>
+                                    <h4 class="fw-bolder text-secondary">abc-def-ghij</h4>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-5 px- 2 py-3 in-service-area mt-md-0 mt-sm-4">
                         <h3 class="text-center in-service">In Service</h3>
-                            <div class="mx-2">
+                            <div class="mx-2 in-service-members">
                                 <h4>Rayhan</h4>
                                 <h4>Tawhid</h4>
+                                <h4>Meraj</h4>
+                                <h4>Meraj</h4>
+                                <h4>Meraj</h4>
+                                <h4>Meraj</h4>
+                                <h4>Meraj</h4>
+                                <h4>Meraj</h4>
                                 <h4>Meraj</h4>
                                 <h4>Meraj</h4>
                                 <h4>Meraj</h4>
@@ -48,11 +54,32 @@ mainQueue.innerHTML = `
                 </div>
             </div>
         </div>
-        <div class="col-md-4 people-waitng px-3 py-4">
+        <div class="col-md-4 people-waitng p-3">
             <h3 class="text-center py-3">People Waiting</h3>
-            <div class="mx-2">
+            <div class="mx-2 waiting-member">
                 <h4>Rayhan</h4>
                 <h4>Tawhid</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
+                <h4>Meraj</h4>
                 <h4>Meraj</h4>
                 <h4>Meraj</h4>
                 <h4>Meraj</h4>

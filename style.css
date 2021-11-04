@@ -69,11 +69,12 @@ body {
 }
 
 /****Menu Area*****/
+
 .menu-area {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 30px;
+  padding: 30px;
   align-items: center;
 }
 .left-area {
@@ -104,7 +105,7 @@ body {
   height: 100%;
   background-color: var(--secondary);
   transition-delay: 0.3s;
-  transition: all 0.5s ease;
+  transition: 0.5s all ease;
   z-index: 10;
 }
 .sidebar header h2 {

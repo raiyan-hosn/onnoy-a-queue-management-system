@@ -37,61 +37,64 @@
 	</head>
 	<body>
 		<!--***Menu Area***-->
-		<nav class="menu-area">
-			<div class="left-area">
-				<div class="open-menu">
-					<i class="fa fa-bars" id="sb-bar"></i>
+		<div class="top-menu-area">
+			<nav class="menu-area">
+				<div class="left-area">
+					<div class="open-menu">
+						<i class="fa fa-bars" id="sb-bar"></i>
+					</div>
+					<div class="close-menu">
+						<i class="fa fa-times hide" id="sb-cancel"></i>
+					</div>
+					<div id="sidebar" class="sidebar hide">
+						<header><h2 id="sidebar-title">Onnay</h2></header>
+						<ul id="nav-menu">
+							<li>
+								<a  id="home-menu" href="#"> <i class="fa fa-home"></i>home</a>
+							</li>
+							<li>
+								<a  id="profile-menu" href="#"> <i class="fa fa-user"></i>profile </a>
+							</li>
+							<li>
+								<a id="create-menu" href="#">
+									<i class="fas fa-plus"></i></i>Create
+								</a>
+							</li>
+							<li>
+								<a id="join-menu" href="#">
+									<i class="fas fa-sign-in-alt"></i></i>Join
+								</a>
+							</li>
+							<li>
+								<a id="prev-menu" href="#">
+									<i class="fa fa-history"></i>Previous
+								</a>
+							</li>
+							<li>
+								<a id="invited-menu" href="#">
+									<i class="fa fa-user-plus"></i>Invitations
+								</a>
+							</li>
+							<li>
+								<a id="report-menu" href="#"> <i class="fa fa-bug"></i>Report </a>
+							</li>
+							<li>
+								<a id="about-menu" href="#"> <i class="fa fa-code"></i>About </a>
+							</li>
+						</ul>
+					</div>
+	
+					<h2 class="title">Onnay</h2>
 				</div>
-				<div class="close-menu">
-					<i class="fa fa-times hide" id="sb-cancel"></i>
+				<div class="right-area">
+					<div class="time">
+						<p id="time"></p>
+					</div>
+					<div class="profile-icon"></div>
 				</div>
-				<div id="sidebar" class="sidebar hide">
-					<header><h2>Onnay</h2></header>
-					<ul id="nav-menu">
-						<li>
-							<a  id="home-menu" href="#"> <i class="fa fa-home"></i>home</a>
-						</li>
-						<li>
-							<a  id="profile-menu" href="#"> <i class="fa fa-user"></i>profile </a>
-						</li>
-						<li>
-							<a id="create-menu" href="#">
-								<i class="fas fa-plus"></i></i>Create
-							</a>
-						</li>
-						<li>
-							<a id="join-menu" href="#">
-								<i class="fas fa-sign-in-alt"></i></i>Join
-							</a>
-						</li>
-						<li>
-							<a id="prev-menu" href="#">
-								<i class="fa fa-history"></i>Previous
-							</a>
-						</li>
-						<li>
-							<a id="invited-menu" href="#">
-								<i class="fa fa-user-plus"></i>Invitations
-							</a>
-						</li>
-						<li>
-							<a id="report-menu" href="#"> <i class="fa fa-bug"></i>Report </a>
-						</li>
-						<li>
-							<a id="about-menu" href="#"> <i class="fa fa-code"></i>About </a>
-						</li>
-					</ul>
-				</div>
-
-				<h2 class="title">Onnay</h2>
-			</div>
-			<div class="right-area">
-				<div class="time">
-					<p id="time"></p>
-				</div>
-				<div class="profile-icon"></div>
-			</div>
-		</nav>
+			</nav>
+		</div>
+		
 		<!--Home-->
 		<section class="home-area container show" id="home">
 			<div class="container text-center">

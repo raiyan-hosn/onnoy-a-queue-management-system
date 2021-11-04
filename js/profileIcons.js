@@ -47,6 +47,7 @@ function generateProfileNavs() {
       largeImg.src = snapshot.val().photoURL;
       console.log(largeImg);
       const profileNavs = document.createElement("div");
+      profileNavs.id = "profile-nav";
       profileNavs.classList.add("profile-nav-options");
       profileNavs.innerHTML = `<ul class="p-0 d-flex flex-column align-items-center">
       <li><img src="${largeImg.src}"></li>

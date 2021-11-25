@@ -1,29 +1,30 @@
+
 var queuesRef = firebase.database().ref("queues");
 
 function createQueue(newQueue) {
-    let id = createKey();
-    let tittle= newQueue.queueTitle;
-    let time=newQueue.queueDate;
-    let type=newQueue.queueDeskType;
-    let inviteList=newQueue.invitedEmails;
+    let qid = createKey();
+    let tittle = newQueue.queueTitle;
+    let time = newQueue.queueDate;
+    let type = newQueue.queueDeskType;
+    let inviteList = newQueue.invitedEmails;
     let owner = filterPath(getUserEmail());
     if (!isSignedIn()) {
         return;
     }
-    let objInvite={};
+    let objInvite = {};
     for (let i = 0; i < inviteList.length; i++) {
-        let email= filterPath(inviteList[i][0]);
-        let access= inviteList[i][1];
+        let email = filterPath(inviteList[i][0]);
+        let access = inviteList[i][1];
 
-        objInvite[email]=access;
+        objInvite[email] = access;
 
         usersRef
-            .child(email+"/inviteList")
+            .child(email + "/inviteList")
             .update({
-                [id]: access
+                [qid]: access
             });
     }
-    queuesRef.child(id)
+    queuesRef.child(qid)
         .set({
             tittle: tittle,
             time: time,
@@ -32,7 +33,64 @@ function createQueue(newQueue) {
             inviteList: objInvite
         });
 }
+function joinQueue(qid) {
+    queuesRef.child(qid).on("value", function (snapshot) {
+        if (snapshot.val() == null) {
+            console.log("no queue found");
+        }
+        else {
+            let inviteList = snapshot.val().inviteList;
+            let owner = snapshot.val().owner;
+            let tittle = snapshot.val().tittle;
+            let time = snapshot.val().time;
+            let type = snapshot.val().type;
+            let counterList = snapshot.val().counterList;
+            let deskList = snapshot.val().deskList;
+            let waitingList = snapshot.val().waitingList;
 
+            // console.log(waitingList);
+
+        }
+    });
+
+}
+function addPeople(qid, name) {
+    qRef = queuesRef.child(qid);
+    qRef.child("waitingList").once("value", function (snapshot) {
+        let lastKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length-1];
+       
+        let serialNo;
+        if(lastKey==null){
+            //do something
+        }else{
+             serialNo= parseInt(lastKey)+1;
+        }
+
+        queuesRef.child(qid + "/waitingList").update(
+            {
+                [serialNo]: name
+            }
+        );
+    });
+}
+function callPeople(qid,counter) {
+    
+    qRef = queuesRef.child(qid);
+    qRef.child("waitingList").once("value", function (snapshot) {
+        let firstKey=Object.keys(snapshot.val())[0];
+        let peopleName=snapshot.val()[firstKey];
+        
+        //remove person from waiting list
+        qRef.child("waitingList/" + firstKey).remove();
+
+        //add person to service list
+        qRef.child("serviceList/"+firstKey).set({
+            counter: counter,
+            name: peopleName
+        });
+
+    });
+}
 var arr2 = [
     ["raiyan.hosn@gmail.com", "desk"],
     ["raiyan15-10258@diu.edu.bd", "counter"]

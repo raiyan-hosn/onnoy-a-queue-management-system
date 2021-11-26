@@ -75,21 +75,86 @@ function addPeople(qid, name) {
 }
 function callPeople(qid,counter) {
     
-    qRef = queuesRef.child(qid);
-    qRef.child("waitingList").once("value", function (snapshot) {
+    qidRef = queuesRef.child(qid);
+    qidRef.child("waitingList").once("value", function (snapshot) {
         let firstKey=Object.keys(snapshot.val())[0];
         let peopleName=snapshot.val()[firstKey];
         
         //remove person from waiting list
-        qRef.child("waitingList/" + firstKey).remove();
+        qidRef.child("waitingList/" + firstKey).remove();
 
         //add person to service list
-        qRef.child("serviceList/"+firstKey).set({
+        qidRef.child("serviceList/"+firstKey).set({
             counter: counter,
             name: peopleName
         });
 
     });
+}
+function canAddPeople(qid){
+    qidRef = queuesRef.child(qid);
+    email=filterPath(getUserEmail());
+    qidRef.child("deskList").once("value",function(snapshot){
+        keys=Object.keys(snapshot.val());
+        flag=false;
+        for(let i=0;i<keys.length;i++){
+            if(snapshot.val()[keys[i]]['email']==email){
+                flag=true;
+                break;
+            }
+            else{
+                console.log(snapshot.val()[keys[i]]['email']);
+            }
+        }
+            if(flag){
+                //return true
+            }
+            else{
+                //return false
+            }
+    });
+
+}
+function canCallPeople(qid){
+    qidRef = queuesRef.child(qid);
+    email=filterPath(getUserEmail());
+    qidRef.child("counterList").once("value",function(snapshot){
+        keys=Object.keys(snapshot.val());
+        flag=false;
+        for(let i=0;i<keys.length;i++){
+            if(snapshot.val()[keys[i]]['email']==email){
+                flag=true;
+                break;
+            }
+            else{
+                console.log(snapshot.val()[keys[i]]['email']);
+            }
+        }
+            if(flag){
+                //return true
+            }
+            else{
+                //return false
+            }
+    });
+
+}
+function canUpdateNoticeboard(qid){
+    qidRef = queuesRef.child(qid);
+    email=filterPath(getUserEmail());
+    qidRef.child("owner").once("value",function(snapshot){
+       if(snapshot.val()==email){
+           // return true
+         
+       }
+       else{
+           //return false
+       }
+    });
+}
+function updateNoticeBoard(qid)
+{
+    
 }
 var arr2 = [
     ["raiyan.hosn@gmail.com", "desk"],

@@ -2,6 +2,10 @@ const mainQueue = document.getElementById("main-queue");
 mainQueue.classList.add("container");
 mainQueue.classList.add("main-queue");
 
+const callPeopleBtn = true;
+const addPeopleBtn = true;
+
+
 mainQueue.innerHTML = `
     <div class="row mb-5">
         <div class="col-md-8 mb-5">
@@ -28,22 +32,23 @@ mainQueue.innerHTML = `
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5 px- 2 py-3 in-service-area mt-md-0 mt-sm-4">
+                    <div class="col-md-5 px- 2 py-3 in-service-area mt-md-0 mt-sm-4 position-relative">
                         <h3 class="text-center in-service">In Service</h3>
-                            <div class="mx-2 in-service-members">
-                                <h4>Rayhan</h4>
-                                <h4>Tawhid</h4>
-                                <h4>Meraj</h4>
-                                <h4>Meraj</h4>
-                                <h4>Meraj</h4>
-                                <h4>Meraj</h4>
-                                <h4>Meraj</h4>
-                                <h4>Meraj</h4>
-                                <h4>Meraj</h4>
-                                <h4>Meraj</h4>
-                                <h4>Meraj</h4>
-                                <h4>Meraj</h4>
-                            </div>
+                        <div class="mx-2 in-service-members">
+                            <h4>Rayhan</h4>
+                            <h4>Tawhid</h4>
+                            <h4>Meraj</h4>
+                            <h4>Meraj</h4>
+                            <h4>Meraj</h4>
+                            <h4>Meraj</h4>
+                            <h4>Meraj</h4>
+                            <h4>Meraj</h4>
+                            <h4>Meraj</h4>
+                            <h4>Meraj</h4>
+                            <h4>Meraj</h4>
+                            <h4>Meraj</h4>
+                        </div>
+                        <div id="add-in-service" class="add-in-service"></div>
                     </div>
                 </div>
             </div>
@@ -54,7 +59,7 @@ mainQueue.innerHTML = `
                 </div>
             </div>
         </div>
-        <div class="col-md-4 people-waitng p-3">
+        <div class="col-md-4 people-waitng p-3 position-relative">
             <h3 class="text-center py-3">People Waiting</h3>
             <div class="mx-2 waiting-member">
                 <h4>Rayhan</h4>
@@ -85,6 +90,25 @@ mainQueue.innerHTML = `
                 <h4>Meraj</h4>
                 <h4>Meraj</h4>
             </div>
+            <div id="add-waiting-member" class="add-waiting-member">
+            </div>
         </div>
     </div>
 `;
+
+console.log(document.getElementById("add-in-service").innerHTML);
+
+if(callPeopleBtn) {
+    document.getElementById("add-in-service").innerHTML = `<button id="callPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
+}
+if(addPeopleBtn) {
+    document.getElementById("add-waiting-member").innerHTML = `<button id="addPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
+}
+
+document.getElementById("callPeopleBtn").addEventListener("click", ()=> {
+    console.log("call people button clicked");
+});
+
+document.getElementById("addPeopleBtn").addEventListener("click", ()=> {
+    console.log("add people button clicked");
+});

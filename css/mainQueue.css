@@ -70,3 +70,20 @@
   height: 570px;
   overflow-y: auto;
 }
+.add-in-service, .add-waiting-member {
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+}
+
+.add-in-service button, .add-waiting-member button {
+  font-size: 20px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: #fe8a71;
+  color: #2ecc71;
+  border: 0;
+}
+
+

@@ -46,7 +46,7 @@ mainQueue.innerHTML = `
                             <h4>Meraj</h4>
                             <h4>Meraj</h4>
                         </div>
-                        <div id="add-in-service" class="add-in-service"></div>
+                        <div id="callPeopleBtn" class="add-in-service"></div>
                     </div>
                 </div>
             </div>
@@ -146,7 +146,7 @@ sleep(2500).then(() => {
             document.getElementById("callPeopleBtn").addEventListener("click", () => {
                 console.log("call people button clicked");
             });
-            document.getElementById("add-in-service").innerHTML = `<button id="callPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
+            document.getElementById("add-waiting-member").innerHTML = `<button id="callPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
         }
         else {
             //return false

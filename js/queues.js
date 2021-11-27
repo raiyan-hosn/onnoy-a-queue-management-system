@@ -91,6 +91,7 @@ function callPeople(qid,counter) {
 
     });
 }
+
 function canAddPeople(qid){
     qidRef = queuesRef.child(qid);
     email=filterPath(getUserEmail());

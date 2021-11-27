@@ -96,19 +96,65 @@ mainQueue.innerHTML = `
     </div>
 `;
 
-console.log(document.getElementById("add-in-service").innerHTML);
-
-if(callPeopleBtn) {
-    document.getElementById("add-in-service").innerHTML = `<button id="callPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
+function sleep(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
 }
-if(addPeopleBtn) {
-    document.getElementById("add-waiting-member").innerHTML = `<button id="addPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
-}
+let qid = "cdf-npkx-vha";
+sleep(1500).then(() => {
+    qidRef = queuesRef.child(qid);
+    email = filterPath(getUserEmail());
+    qidRef.child("deskList").once("value", function (snapshot) {
+        keys = Object.keys(snapshot.val());
+        flag = false;
+        for (let i = 0; i < keys.length; i++) {
+            if (snapshot.val()[keys[i]]['email'] == email) {
+                flag = true;
+                break;
+            }
+            else {
+                console.log(snapshot.val()[keys[i]]['email']);
+            }
+        }
+        if (flag) {
 
-document.getElementById("callPeopleBtn").addEventListener("click", ()=> {
-    console.log("call people button clicked");
+            document.getElementById("addPeopleBtn").addEventListener("click", () => {
+                console.log("add people button clicked");
+            });
+            document.getElementById("add-waiting-member").innerHTML = `<button id="addPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
+        }
+        else {
+            //return false
+        }
+    });
+
+
+
+    qidRef.child("counterList").once("value", function (snapshot) {
+        keys = Object.keys(snapshot.val());
+        flag = false;
+        for (let i = 0; i < keys.length; i++) {
+            if (snapshot.val()[keys[i]]['email'] == email) {
+                flag = true;
+                break;
+            }
+            else {
+                //console.log(snapshot.val()[keys[i]]['email']);
+            }
+        }
+        if (flag) {
+            document.getElementById("callPeopleBtn").addEventListener("click", () => {
+                console.log("call people button clicked");
+            });
+            document.getElementById("add-in-service").innerHTML = `<button id="callPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
+        }
+        else {
+            //return false
+        }
+    });
+
 });
 
-document.getElementById("addPeopleBtn").addEventListener("click", ()=> {
-    console.log("add people button clicked");
-});
+
+
+
+

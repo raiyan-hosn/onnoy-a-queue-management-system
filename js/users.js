@@ -55,6 +55,8 @@ function filterPath(str) {
 function antiFilterPath(str) {
 	return str.replaceAll("_", ".");
 }
+
+
 function getUserEmail() {
 	var email = firebase.auth().currentUser.email;
 	return email;

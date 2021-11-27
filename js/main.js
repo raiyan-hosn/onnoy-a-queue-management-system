@@ -2,8 +2,6 @@ const mainQueue = document.getElementById("main-queue");
 mainQueue.classList.add("container");
 mainQueue.classList.add("main-queue");
 
-const callPeopleBtn = true;
-const addPeopleBtn = true;
 
 
 mainQueue.innerHTML = `
@@ -96,11 +94,14 @@ mainQueue.innerHTML = `
     </div>
 `;
 
+const callPeopleBtn = document.getElementById("callPeopleBtn");
+const addWaitingPeople = document.getElementById("add-waiting-member");
+
 function sleep(time) {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
 let qid = "cdf-npkx-vha";
-sleep(1500).then(() => {
+sleep(2500).then(() => {
     qidRef = queuesRef.child(qid);
     email = filterPath(getUserEmail());
     qidRef.child("deskList").once("value", function (snapshot) {
@@ -117,10 +118,10 @@ sleep(1500).then(() => {
         }
         if (flag) {
 
-            document.getElementById("addPeopleBtn").addEventListener("click", () => {
+            callPeopleBtn.addEventListener("click", () => {
                 console.log("add people button clicked");
             });
-            document.getElementById("add-waiting-member").innerHTML = `<button id="addPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
+            addWaitingPeople.innerHTML = `<button id="addPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
         }
         else {
             //return false

@@ -47,8 +47,24 @@ function joinQueue(qid) {
             let counterList = snapshot.val().counterList;
             let deskList = snapshot.val().deskList;
             let waitingList = snapshot.val().waitingList;
+            let serviceList = snapshot.val().serviceList;
+
+            const param = {
+                qid,
+                inviteList, 
+                owner,
+                tittle,
+                time,
+                type,
+                counterList,
+                deskList,
+                waitingList,
+                serviceList
+            };
 
             // console.log(waitingList);
+
+            mainUi(param);
 
         }
     });

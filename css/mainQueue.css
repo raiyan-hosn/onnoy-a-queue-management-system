@@ -70,18 +70,24 @@
   height: 570px;
   overflow-y: auto;
 }
-.add-in-service, .add-waiting-member {
+.add-in-service, .add-waiting-member{
   position: absolute;
   right: 30px;
   bottom: 30px;
 }
 
-.add-in-service button, .add-waiting-member button {
+.edit-notice {
+  position: absolute;
+  right: 10px;
+  top: 20%;
+}
+
+.add-in-service button, .add-waiting-member button, .edit-notice button {
   font-size: 20px;
   height: 50px;
   width: 50px;
   border-radius: 50%;
-  background-color: #fe8a71;
+  background-color: #fff;
   color: #2ecc71;
   border: 0;
 }

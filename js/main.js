@@ -33,7 +33,7 @@ mainQueue.innerHTML = `
                     <div class="col-md-5 px- 2 py-3 in-service-area mt-md-0 mt-sm-4 position-relative">
                         <h3 class="text-center in-service">In Service</h3>
                         <div class="mx-2 in-service-members">
-                            <h4>Rayhan</h4>
+                            <h4>raju</h4>
                             <h4>Tawhid</h4>
                             <h4>Meraj</h4>
                             <h4>Meraj</h4>
@@ -113,12 +113,12 @@ sleep(2500).then(() => {
                 break;
             }
             else {
-                console.log(snapshot.val()[keys[i]]['email']);
+                //console.log(snapshot.val()[keys[i]]['email']);
             }
         }
         if (flag) {
 
-            callPeopleBtn.addEventListener("click", () => {
+            addWaitingPeople.addEventListener("click", () => {
                 console.log("add people button clicked");
             });
             addWaitingPeople.innerHTML = `<button id="addPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
@@ -143,10 +143,11 @@ sleep(2500).then(() => {
             }
         }
         if (flag) {
-            document.getElementById("callPeopleBtn").addEventListener("click", () => {
+            
+                callPeopleBtn.addEventListener("click", () => {
                 console.log("call people button clicked");
             });
-            document.getElementById("add-waiting-member").innerHTML = `<button id="callPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
+            callPeopleBtn.innerHTML = `<button id="callPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
         }
         else {
             //return false

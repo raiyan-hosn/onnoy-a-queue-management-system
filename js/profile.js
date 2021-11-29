@@ -28,3 +28,16 @@ if (loginStatusForProfile) {
 	profile.appendChild(errorIcon);
 	profile.appendChild(loginMessage);
 }
+
+// jodi signed in hoy tahole eita hobe........................
+
+const profileContainer = document.getElementById("profile-container");
+	profileContainer.innerHTML = `
+		<div class="col-sm-6 mx-auto text-center">
+			<img height="150px" width="150px" src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" class="rounded" alt="user profile image">
+			<h5 class="my-3">Name of user</h5>
+			<h5 class="my-3">Email of user</h5>
+			
+		</div>
+		<marquee>If you want to change your profile name and picture, at first change it to your google accout.</marquee>
+	`;

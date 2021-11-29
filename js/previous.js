@@ -6,7 +6,7 @@ const obj = {
 	access: "desk",
 };
 
-const arr = [obj, obj, obj];
+const arr = [obj, obj, obj, obj, obj, obj];
 let prevQueue = "";
 for (let i = 0; i < arr.length; i++) {
 	prevQueue =

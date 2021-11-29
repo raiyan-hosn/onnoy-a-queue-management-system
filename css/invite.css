@@ -1,0 +1,25 @@
+.accpet-btn, .decline-btn {
+    font-size: 18px;
+    padding: 8px 15px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    margin: 0 10px;
+    font-weight: 600;
+    transition: 0.4s all ease;
+}
+.accpet-btn {
+    background-color: #f0ce49;
+}
+.decline-btn {
+    background-color: #e97568;
+}
+
+.accpet-btn:hover {
+    background-color: #e4b600;
+    border: 2px solid #f1c40f;
+}
+
+.decline-btn:hover {
+    background-color: #f0341f;
+    border: 2px solid #e74c3c;
+}

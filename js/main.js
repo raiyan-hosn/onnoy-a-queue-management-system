@@ -1,7 +1,9 @@
+const mainQueue = document.getElementById("main-queue");
+mainQueue.classList.add("container");
+mainQueue.classList.add("main-queue");
+
 const mainUi = (param) => {
-    const mainQueue = document.getElementById("main-queue");
-    mainQueue.classList.add("container");
-    mainQueue.classList.add("main-queue");
+    
 
     const {qid,inviteList, owner,tittle,time,type,counterList,deskList,waitingList, serviceList} = param;
 
@@ -59,6 +61,47 @@ const mainUi = (param) => {
                 </div>
             </div>
         </div>
+
+        <!-- Modal addPeopleModa-->
+        <div class="modal fade" id="addPeopleBtnModal" tabindex="-1" role="dialog" aria-labelledby="addPeopleBtnModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Add People</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="newPeopleInput" class="form-control" type="text" placeholder="Enter the name...">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="newPeopleAdd" type="button" class="btn btn-primary">Add</button>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Notice edit-->
+        <div class="modal fade" id="notice" tabindex="-1" role="dialog" aria-labelledby="noticeTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Notice</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input id="newNoticeInput" class="form-control" type="text" placeholder="Enter the name...">
+                </div>
+                <div class="modal-footer">
+                    <button id="newNoticeAdd" type="button" class="btn btn-primary" data-dismiss="modal">Post Notice</button>
+                </div>
+                </div>
+            </div>
+        </div>
     `;
     
 
@@ -71,7 +114,19 @@ const mainUi = (param) => {
 
     // notice in ui
     const editNotice = document.getElementById("edit-notice");
-    editNotice.innerHTML = `<button id="editNoticeBtn"><i class="fas fa-edit"></i></i></button>`;
+    editNotice.innerHTML = `<button id="editNoticeBtn" data-toggle="modal" data-target="#notice" type="button"><i class="fas fa-edit"></i></button>`;
+    editNotice.addEventListener("click", ()=> {
+        // Edit notice Btn works ....
+
+        const newNoticeAdd = document.getElementById("newNoticeAdd");
+        newNoticeAdd.addEventListener("click", ()=> {
+            const newNoticeInput = document.getElementById("newNoticeInput");
+            if(newNoticeInput.value !== ""){
+                console.log(newNoticeInput.value);
+                newNoticeInput.value = "";
+            }
+        });
+    });
 
 
     ////////////////
@@ -101,8 +156,19 @@ const mainUi = (param) => {
 
                 addWaitingPeople.addEventListener("click", () => {
                     console.log("add people button clicked");
+
+                    /// get new people works...
+                    const newPeopleAdd = document.getElementById("newPeopleAdd");
+                    newPeopleAdd.addEventListener("click", ()=> {
+                        const newPeopleInput = document.getElementById("newPeopleInput");
+                        if(newPeopleInput.value !== "") {
+                            console.log(qid, newPeopleInput.value);
+                            addPeople(qid, newPeopleInput.value);
+                            newPeopleInput.value = "";
+                        }
+                    });
                 });
-                addWaitingPeople.innerHTML = `<button id="addPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
+                addWaitingPeople.innerHTML = `<button data-toggle="modal" data-target="#addPeopleBtnModal" type="button" id="addPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
             }
             else {
                 //return false
@@ -145,13 +211,11 @@ const mainUi = (param) => {
     const counterNo = document.getElementById("counter-no");
 
     const arrInServicePeople = Object.keys(serviceList);
-    console.log(arrInServicePeople);
     serialNo.innerText = `${arrInServicePeople[arrInServicePeople.length - 1]}`;
     counterNo.innerText = `counter no: ${serviceList[arrInServicePeople.length]["counter"]}`;
 
     for(let i = arrInServicePeople.length - 1; i >= 0; i--) {
         const {name, counter} = serviceList[arrInServicePeople[i]];
-        console.log(name, counter);
         const singleInServiceMember = document.createElement("h4");
         singleInServiceMember.innerText = `${arrInServicePeople[i]} - ${name} / C - ${counter}`;
         inServicePeople.appendChild(singleInServiceMember);
@@ -169,11 +233,11 @@ const mainUi = (param) => {
         waitingMember.appendChild(singleWaitingMember);
     }
 
+    const newPeopleAdd = document.getElementById("newPeopleAdd");
+    console.log(newPeopleAdd);
+
+
     
-
-
-
-
 
 };
 
@@ -187,3 +251,9 @@ joinQueueBtn.addEventListener("click", ()=> {
         joinQueue(joinQueueText.value);
     }
 });
+
+const failToJoin = () => {
+    mainQueue.innerHTML = `
+        <p class="text-center font-weight-bold h3 text-danger">Invalid Queue Id</p>
+    `;
+};

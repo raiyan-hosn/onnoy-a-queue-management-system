@@ -36,7 +36,7 @@ function createQueue(newQueue) {
 function joinQueue(qid) {
     queuesRef.child(qid).on("value", function (snapshot) {
         if (snapshot.val() == null) {
-            console.log("no queue found");
+            failToJoin();
         }
         else {
             let inviteList = snapshot.val().inviteList;
@@ -71,6 +71,7 @@ function joinQueue(qid) {
 
 }
 function addPeople(qid, name) {
+    console.log("addPeople fuction called");
     qRef = queuesRef.child(qid);
     qRef.child("waitingList").once("value", function (snapshot) {
         let lastKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length-1];

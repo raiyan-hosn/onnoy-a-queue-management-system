@@ -86,7 +86,7 @@ function addPeople(qid, name) {
        
             let serialNo= snapshot.val()+1;
             
-            qRef.child("lastSL").update({
+            qidRef = queuesRef.child(qid).update({
                 lastSL: serialNo
             });
             queuesRef.child(qid + "/waitingList").update(

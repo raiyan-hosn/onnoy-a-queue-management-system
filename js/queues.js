@@ -8,6 +8,8 @@ function createQueue(newQueue) {
     let type = newQueue.queueDeskType;
     let inviteList = newQueue.invitedEmails;
     let owner = filterPath(getUserEmail());
+    let notice="";
+    let lastSL=0;
     if (!isSignedIn()) {
         return;
     }
@@ -30,7 +32,9 @@ function createQueue(newQueue) {
             time: time,
             type: type,
             owner: owner,
-            inviteList: objInvite
+            inviteList: objInvite,
+            notice: notice,
+            lastSL: lastSL
         });
 }
 function joinQueue(qid) {
@@ -48,7 +52,7 @@ function joinQueue(qid) {
             let deskList = snapshot.val().deskList;
             let waitingList = snapshot.val().waitingList;
             let serviceList = snapshot.val().serviceList;
-
+            let notice=snapshot.val().notice;
             const param = {
                 qid,
                 inviteList, 
@@ -59,7 +63,8 @@ function joinQueue(qid) {
                 counterList,
                 deskList,
                 waitingList,
-                serviceList
+                serviceList,
+                notice
             };
 
             // console.log(waitingList);

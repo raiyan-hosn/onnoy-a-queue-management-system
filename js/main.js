@@ -5,7 +5,7 @@ mainQueue.classList.add("main-queue");
 const mainUi = (param) => {
     
 
-    const {qid,inviteList, owner,tittle,time,type,counterList,deskList,waitingList, serviceList} = param;
+    const {qid,inviteList, owner,tittle,time,type,counterList,deskList,waitingList, serviceList,notice} = param;
 
 
     mainQueue.innerHTML = `

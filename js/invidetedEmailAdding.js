@@ -56,7 +56,7 @@ const newAddPerson = (email, type, index) => {
                   </div>
                 </div>
                 <div class="trash invitedEmail-item-trash rounded-circle col-3">
-                  <i class="trash fas fa-times"></i>
+                  <div><i class="trash fas fa-times"></i></div>
                 </div>
               `;
 

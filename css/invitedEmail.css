@@ -29,13 +29,21 @@
 .invitedEmail-item-trash {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: red;
+  justify-content: end;
   color: white;
   font-size: 30px;
-  height: 50px;
-  width: 50px;
   cursor: pointer;
+}
+.invitedEmail-item-trash div {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  border-radius: 50%;
+  height: 60px;
+  width: 60px;
+  background-color: red;
 }
 .invitedEmail-item-trash i {
   pointer-events: none;

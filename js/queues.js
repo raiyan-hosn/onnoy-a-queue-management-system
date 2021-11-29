@@ -1,6 +1,6 @@
 
 var queuesRef = firebase.database().ref("queues");
-
+var userEmail;
 function createQueue(newQueue) {
     let qid = createKey();
     let tittle = newQueue.queueTitle;
@@ -192,7 +192,6 @@ function canUpdateNoticeboard(qid){
     qidRef.child("owner").once("value",function(snapshot){
        if(snapshot.val()==email){
            // return true
-         
        }
        else{
            //return false

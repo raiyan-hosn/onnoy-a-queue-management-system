@@ -3,9 +3,9 @@ mainQueue.classList.add("container");
 mainQueue.classList.add("main-queue");
 
 const mainUi = (param) => {
-    
 
-    const {qid,inviteList, owner,tittle,time,type,counterList,deskList,waitingList, serviceList,notice} = param;
+
+    const { qid, inviteList, owner, tittle, time, type, counterList, deskList, waitingList, serviceList, notice } = param;
 
 
     mainQueue.innerHTML = `
@@ -103,7 +103,7 @@ const mainUi = (param) => {
             </div>
         </div>
     `;
-    
+
 
     // queue title in ui 
     const queueTitle = document.getElementById("queue-title");
@@ -113,21 +113,32 @@ const mainUi = (param) => {
     queueIdUi.innerText = `${qid}`;
 
     // notice in ui
-    const editNotice = document.getElementById("edit-notice");
-    editNotice.innerHTML = `<button id="editNoticeBtn" data-toggle="modal" data-target="#notice" type="button"><i class="fas fa-edit"></i></button>`;
-    editNotice.addEventListener("click", ()=> {
-        // Edit notice Btn works ....
-
-        const newNoticeAdd = document.getElementById("newNoticeAdd");
-        newNoticeAdd.addEventListener("click", ()=> {
-            const newNoticeInput = document.getElementById("newNoticeInput");
-            if(newNoticeInput.value !== ""){
-                console.log(newNoticeInput.value);
-                newNoticeInput.value = "";
-            }
-        });
+    qidRef = queuesRef.child(qid);
+    email = filterPath(getUserEmail());
+    qidRef.child("owner").once("value", function (snapshot) {
+        if (snapshot.val() == email) {
+            // return true
+            const editNotice = document.getElementById("edit-notice");
+            editNotice.innerHTML = `<button id="editNoticeBtn" data-toggle="modal" data-target="#notice" type="button"><i class="fas fa-edit"></i></button>`;
+            editNotice.addEventListener("click", () => {
+                // Edit notice Btn works ....
+               
+                const newNoticeAdd = document.getElementById("newNoticeAdd");
+                newNoticeAdd.addEventListener("click", () => {
+                    const newNoticeInput = document.getElementById("newNoticeInput");
+                    if (newNoticeInput.value !== "") {
+                        console.log(newNoticeInput.value);
+                        newNoticeInput.value = "";
+                    }
+                });
+            });
+        
+        }
+        else {
+            //return false
+        }
     });
-
+ 
 
     ////////////////
 
@@ -140,6 +151,7 @@ const mainUi = (param) => {
     sleep(2500).then(() => {
         qidRef = queuesRef.child(qid);
         email = filterPath(getUserEmail());
+        userEmail = email;
         qidRef.child("deskList").once("value", function (snapshot) {
             keys = Object.keys(snapshot.val());
             flag = false;
@@ -159,9 +171,9 @@ const mainUi = (param) => {
 
                     /// get new people works...
                     const newPeopleAdd = document.getElementById("newPeopleAdd");
-                    newPeopleAdd.addEventListener("click", ()=> {
+                    newPeopleAdd.addEventListener("click", () => {
                         const newPeopleInput = document.getElementById("newPeopleInput");
-                        if(newPeopleInput.value !== "") {
+                        if (newPeopleInput.value !== "") {
                             console.log(qid, newPeopleInput.value);
                             addPeople(qid, newPeopleInput.value);
                             newPeopleInput.value = "";
@@ -190,8 +202,8 @@ const mainUi = (param) => {
                 }
             }
             if (flag) {
-                
-                    callPeopleBtn.addEventListener("click", () => {
+
+                callPeopleBtn.addEventListener("click", () => {
                     console.log("call people button clicked");
                 });
                 callPeopleBtn.innerHTML = `<button id="callPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
@@ -202,7 +214,7 @@ const mainUi = (param) => {
         });
 
     });
-    
+
 
     // in service member list ui rendering code ... 
 
@@ -214,8 +226,8 @@ const mainUi = (param) => {
     serialNo.innerText = `${arrInServicePeople[arrInServicePeople.length - 1]}`;
     counterNo.innerText = `counter no: ${serviceList[arrInServicePeople.length]["counter"]}`;
 
-    for(let i = arrInServicePeople.length - 1; i >= 0; i--) {
-        const {name, counter} = serviceList[arrInServicePeople[i]];
+    for (let i = arrInServicePeople.length - 1; i >= 0; i--) {
+        const { name, counter } = serviceList[arrInServicePeople[i]];
         const singleInServiceMember = document.createElement("h4");
         singleInServiceMember.innerText = `${arrInServicePeople[i]} - ${name} / C - ${counter}`;
         inServicePeople.appendChild(singleInServiceMember);
@@ -227,7 +239,7 @@ const mainUi = (param) => {
     // waiting member list ui rendering code...
 
     const waitingMember = document.getElementById("waiting-member");
-    for(const [key, name ] of Object.entries(waitingList)) {
+    for (const [key, name] of Object.entries(waitingList)) {
         const singleWaitingMember = document.createElement("h4");
         singleWaitingMember.innerText = `${key} - ${name}`;
         waitingMember.appendChild(singleWaitingMember);
@@ -237,7 +249,7 @@ const mainUi = (param) => {
     console.log(newPeopleAdd);
 
 
-    
+
 
 };
 
@@ -245,9 +257,9 @@ const mainUi = (param) => {
 
 const joinQueueBtn = document.getElementById("joinQueueBtn");
 
-joinQueueBtn.addEventListener("click", ()=> {
+joinQueueBtn.addEventListener("click", () => {
     const joinQueueText = document.getElementById("joinQueueText");
-    if(joinQueueText.value !== ""){
+    if (joinQueueText.value !== "") {
         joinQueue(joinQueueText.value);
     }
 });

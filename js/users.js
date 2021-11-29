@@ -58,6 +58,9 @@ function antiFilterPath(str) {
 
 
 function getUserEmail() {
+	if(firebase.auth()==null|| firebase.auth().currentUser==null){
+		return "no email";
+	}
 	var email = firebase.auth().currentUser.email;
 	return email;
 }

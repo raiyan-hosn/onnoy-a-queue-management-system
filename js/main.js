@@ -46,7 +46,7 @@ const mainUi = (param) => {
                     <div class="row justify-content-center align-items-center px-3 ">
                         <div class="col-3 py-3 notice-time"><h3>02:45 PM</h3></div>
                         <div class="col-9 py-3 notice-details position-relative">
-                            <h3 class="fw-bolder">Lunch Break Till 03:00 PM Lunch Break Till 03:00 PM Lunch Break Till 03:00 PM</h3>
+                            <h3 class="fw-bolder">${notice}</h3>
                             <div id="edit-notice" class="edit-notice">
                             </div>
                         </div>

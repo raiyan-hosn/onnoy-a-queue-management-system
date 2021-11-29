@@ -128,6 +128,7 @@ const mainUi = (param) => {
                     const newNoticeInput = document.getElementById("newNoticeInput");
                     if (newNoticeInput.value !== "") {
                         console.log(newNoticeInput.value);
+                        updateNoticeBoard(qid,newNoticeInput.value)
                         newNoticeInput.value = "";
                     }
                 });
@@ -192,9 +193,11 @@ const mainUi = (param) => {
         qidRef.child("counterList").once("value", function (snapshot) {
             keys = Object.keys(snapshot.val());
             flag = false;
+            myCounterNumber="";
             for (let i = 0; i < keys.length; i++) {
                 if (snapshot.val()[keys[i]]['email'] == email) {
                     flag = true;
+                    myCounterNumber=keys[i];
                     break;
                 }
                 else {
@@ -205,6 +208,10 @@ const mainUi = (param) => {
 
                 callPeopleBtn.addEventListener("click", () => {
                     console.log("call people button clicked");
+                    if(myCounterNumber!=""){
+                        callPeople(qid,myCounterNumber);
+                    }
+
                 });
                 callPeopleBtn.innerHTML = `<button id="callPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
             }
@@ -246,7 +253,7 @@ const mainUi = (param) => {
     }
 
     const newPeopleAdd = document.getElementById("newPeopleAdd");
-    console.log(newPeopleAdd);
+    // console.log(newPeopleAdd);
 
 
 

@@ -198,8 +198,13 @@ function canUpdateNoticeboard(qid){
        }
     });
 }
-function updateNoticeBoard(qid)
+function updateNoticeBoard(qid,notice)
 {
+    email=userEmail;
+    qidRef = queuesRef.child(qid).update({
+        notice: notice
+    });
+    
     
 }
 var arr2 = [

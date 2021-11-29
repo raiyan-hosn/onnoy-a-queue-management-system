@@ -78,38 +78,17 @@ function joinQueue(qid) {
 function addPeople(qid, name) {
     console.log("addPeople fuction called");
     qRef = queuesRef.child(qid);
-    qRef.child("waitingList").once("value", function (snapshot) {
+    qRef.child("lastSL").once("value", function (snapshot) {
         if(snapshot.val()==null){
-            qRef.child("serviceList").once("value",function(snapshot){
-                if(snapshot.val()==null){
-
-                }else{
-                    let lastKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length-1];
-       
-                    let serialNo;
-                    if(lastKey==null){
-                        //do something
-                    }else{
-                         serialNo= parseInt(lastKey)+1;
-                    }
-            
-                    queuesRef.child(qid + "/waitingList").update(
-                        {
-                            [serialNo]: name
-                        }
-                    );
-                }
-            });
+           
         }else{
-            let lastKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length-1];
+           
        
-            let serialNo;
-            if(lastKey==null){
-                //do something
-            }else{
-                 serialNo= parseInt(lastKey)+1;
-            }
-    
+            let serialNo= snapshot.val()+1;
+            
+            qRef.child("lastSL").update({
+                lastSL: serialNo
+            });
             queuesRef.child(qid + "/waitingList").update(
                 {
                     [serialNo]: name

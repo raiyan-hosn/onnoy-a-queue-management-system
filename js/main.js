@@ -76,8 +76,7 @@ const mainUi = (param) => {
                     <input id="newPeopleInput" class="form-control" type="text" placeholder="Enter the name...">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button id="newPeopleAdd" type="button" class="btn btn-primary">Add</button>
+                    <button id="newPeopleAdd" type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
                 </div>
                 </div>
             </div>

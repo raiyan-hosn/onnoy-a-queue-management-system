@@ -76,8 +76,7 @@ const mainUi = (param) => {
                     <input id="newPeopleInput" class="form-control" type="text" placeholder="Enter the name...">
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button id="newPeopleAdd" type="button" class="btn btn-primary">Add</button>
+                    <button id="newPeopleAdd" type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
                 </div>
                 </div>
             </div>
@@ -153,7 +152,8 @@ const mainUi = (param) => {
                 }
             }
             if (flag) {
-
+                
+                addWaitingPeople.innerHTML = `<button data-toggle="modal" data-target="#addPeopleBtnModal" type="button" id="addPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
                 addWaitingPeople.addEventListener("click", () => {
                     console.log("add people button clicked");
 
@@ -162,13 +162,11 @@ const mainUi = (param) => {
                     newPeopleAdd.addEventListener("click", ()=> {
                         const newPeopleInput = document.getElementById("newPeopleInput");
                         if(newPeopleInput.value !== "") {
-                            console.log(qid, newPeopleInput.value);
                             addPeople(qid, newPeopleInput.value);
                             newPeopleInput.value = "";
                         }
                     });
                 });
-                addWaitingPeople.innerHTML = `<button data-toggle="modal" data-target="#addPeopleBtnModal" type="button" id="addPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
             }
             else {
                 //return false
@@ -232,9 +230,6 @@ const mainUi = (param) => {
         singleWaitingMember.innerText = `${key} - ${name}`;
         waitingMember.appendChild(singleWaitingMember);
     }
-
-    const newPeopleAdd = document.getElementById("newPeopleAdd");
-    console.log(newPeopleAdd);
 
 
     

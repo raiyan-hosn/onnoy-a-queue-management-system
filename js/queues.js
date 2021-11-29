@@ -74,20 +74,44 @@ function addPeople(qid, name) {
     console.log("addPeople fuction called");
     qRef = queuesRef.child(qid);
     qRef.child("waitingList").once("value", function (snapshot) {
-        let lastKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length-1];
-       
-        let serialNo;
-        if(lastKey==null){
-            //do something
-        }else{
-             serialNo= parseInt(lastKey)+1;
-        }
+        if(snapshot.val()==null){
+            qRef.child("serviceList").once("value",function(snapshot){
+                if(snapshot.val()==null){
 
-        queuesRef.child(qid + "/waitingList").update(
-            {
-                [serialNo]: name
+                }else{
+                    let lastKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length-1];
+       
+                    let serialNo;
+                    if(lastKey==null){
+                        //do something
+                    }else{
+                         serialNo= parseInt(lastKey)+1;
+                    }
+            
+                    queuesRef.child(qid + "/waitingList").update(
+                        {
+                            [serialNo]: name
+                        }
+                    );
+                }
+            });
+        }else{
+            let lastKey = Object.keys(snapshot.val())[Object.keys(snapshot.val()).length-1];
+       
+            let serialNo;
+            if(lastKey==null){
+                //do something
+            }else{
+                 serialNo= parseInt(lastKey)+1;
             }
-        );
+    
+            queuesRef.child(qid + "/waitingList").update(
+                {
+                    [serialNo]: name
+                }
+            );
+        }
+        
     });
 }
 function callPeople(qid,counter) {

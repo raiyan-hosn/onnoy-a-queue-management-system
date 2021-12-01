@@ -5,8 +5,21 @@ mainQueue.classList.add("main-queue");
 const mainUi = (param) => {
 
 
-    const { qid, inviteList, owner, tittle, time, type, counterList, deskList, waitingList, serviceList, notice } = param;
-
+    let { qid, inviteList, owner, tittle, time, type, counterList, deskList, waitingList, serviceList, notice } = param;
+    if(serviceList==null){
+        serviceList= {
+            "0":{
+                "name": "None is in service",
+                "counter": "0"
+            },
+          
+        }
+    }
+    if(waitingList==null){
+        waitingList={
+            "0": "None is waiting"
+        }
+    }
 
     mainQueue.innerHTML = `
         <div class="row mb-5">
@@ -153,6 +166,9 @@ const mainUi = (param) => {
         email = filterPath(getUserEmail());
         userEmail = email;
         qidRef.child("deskList").once("value", function (snapshot) {
+            if(snapshot.val()==null){
+                return;
+            }
             keys = Object.keys(snapshot.val());
             flag = false;
             for (let i = 0; i < keys.length; i++) {
@@ -190,6 +206,9 @@ const mainUi = (param) => {
 
 
         qidRef.child("counterList").once("value", function (snapshot) {
+            if(snapshot.val()==null){
+                return;
+            }
             keys = Object.keys(snapshot.val());
             flag = false;
             myCounterNumber="";
@@ -230,8 +249,9 @@ const mainUi = (param) => {
 
     const arrInServicePeople = Object.keys(serviceList);
     serialNo.innerText = `${arrInServicePeople[arrInServicePeople.length - 1]}`;
-    counterNo.innerText = `counter no: ${serviceList[arrInServicePeople.length]["counter"]}`;
-
+    
+    counterNo.innerText = `counter no: ${serviceList[arrInServicePeople[arrInServicePeople.length-1]]["counter"]}`;
+    
     for (let i = arrInServicePeople.length - 1; i >= 0; i--) {
         const { name, counter } = serviceList[arrInServicePeople[i]];
         const singleInServiceMember = document.createElement("h4");

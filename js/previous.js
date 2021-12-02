@@ -25,3 +25,7 @@ for (let i = 0; i < arr.length; i++) {
 }
 const prevContainer = document.getElementById("prev-container");
 prevContainer.innerHTML = prevQueue;
+
+
+
+

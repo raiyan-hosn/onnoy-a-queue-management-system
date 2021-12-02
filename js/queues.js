@@ -186,6 +186,49 @@ function updateNoticeBoard(qid,notice)
     
     
 }
+function showInviteList(email){
+ 
+}
+
+
+
+function addCounter(qid){
+    qidRef = queuesRef.child(qid);
+    email= userEmail;
+    qidRef.child("counterList").once("value",function(snapshot){
+        if(snapshot.val()==null){
+            qidRef.child("counterList").update(
+                {
+                    "1":{
+                        "email":email
+                    }
+                }
+            );
+
+        }
+        qidRef.child("counterList").update(
+            {
+                "1":{
+                    "email":email
+                }
+            }
+        );
+    });
+    
+}
+function add(qid,lastKey,email){
+    qidRef2 = queuesRef.child(qid);
+    qidRef2.child("counterList").update(
+        {
+            [lastKey]:{
+                "email":email
+            }
+        }
+    );
+}
+function addDesk(qid){
+
+}
 var arr2 = [
     ["raiyan.hosn@gmail.com", "desk"],
     ["raiyan15-10258@diu.edu.bd", "counter"]

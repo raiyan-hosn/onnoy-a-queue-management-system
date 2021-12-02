@@ -5,8 +5,21 @@ mainQueue.classList.add("main-queue");
 const mainUi = (param) => {
 
 
-    const { qid, inviteList, owner, tittle, time, type, counterList, deskList, waitingList, serviceList, notice } = param;
-
+    let { qid, inviteList, owner, tittle, time, type, counterList, deskList, waitingList, serviceList, notice } = param;
+    if(serviceList==null){
+        serviceList= {
+            "0":{
+                "name": "None is in service",
+                "counter": "0"
+            },
+          
+        }
+    }
+    if(waitingList==null){
+        waitingList={
+            "0": "None is waiting"
+        }
+    }
 
     mainQueue.innerHTML = `
         <div class="row mb-5">
@@ -46,7 +59,7 @@ const mainUi = (param) => {
                     <div class="row justify-content-center align-items-center px-3 ">
                         <div class="col-3 py-3 notice-time"><h3>02:45 PM</h3></div>
                         <div class="col-9 py-3 notice-details position-relative">
-                            <h3 class="fw-bolder">Lunch Break Till 03:00 PM Lunch Break Till 03:00 PM Lunch Break Till 03:00 PM</h3>
+                            <h3 class="fw-bolder">${notice}</h3>
                             <div id="edit-notice" class="edit-notice">
                             </div>
                         </div>
@@ -112,116 +125,134 @@ const mainUi = (param) => {
     queueIdUi.innerText = `${qid}`;
 
     // notice in ui
-    qidRef = queuesRef.child(qid);
-    email = filterPath(getUserEmail());
-    qidRef.child("owner").once("value", function (snapshot) {
-        if (snapshot.val() == email) {
-            // return true
-            const editNotice = document.getElementById("edit-notice");
-            editNotice.innerHTML = `<button id="editNoticeBtn" data-toggle="modal" data-target="#notice" type="button"><i class="fas fa-edit"></i></button>`;
-            editNotice.addEventListener("click", () => {
-                // Edit notice Btn works ....
-               
-                const newNoticeAdd = document.getElementById("newNoticeAdd");
-                newNoticeAdd.addEventListener("click", () => {
-                    const newNoticeInput = document.getElementById("newNoticeInput");
-                    if (newNoticeInput.value !== "") {
-                        console.log(newNoticeInput.value);
-                        updateNoticeBoard(qid,newNoticeInput.value)
-                        newNoticeInput.value = "";
-                    }
-                });
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            // User is signed in.
+            
+            qidRef = queuesRef.child(qid);
+            email = filterPath(user.email);
+            qidRef.child("owner").once("value", function (snapshot) {
+                if (snapshot.val() == email) {
+                    // return true
+                    const editNotice = document.getElementById("edit-notice");
+                    editNotice.innerHTML = `<button id="editNoticeBtn" data-toggle="modal" data-target="#notice" type="button"><i class="fas fa-edit"></i></button>`;
+                    editNotice.addEventListener("click", () => {
+                        // Edit notice Btn works ....
+                       
+                        const newNoticeAdd = document.getElementById("newNoticeAdd");
+                        newNoticeAdd.addEventListener("click", () => {
+                            const newNoticeInput = document.getElementById("newNoticeInput");
+                            if (newNoticeInput.value !== "") {
+                                console.log(newNoticeInput.value);
+                                updateNoticeBoard(qid,newNoticeInput.value)
+                                newNoticeInput.value = "";
+                            }
+                        });
+                    });
+                
+                }
+                else {
+                    //return false
+                }
             });
+         
         
-        }
-        else {
-            //return false
+
+        } else {
+            // No user is signed in.
         }
     });
- 
-
+  
     ////////////////
 
     const callPeopleBtn = document.getElementById("callPeopleBtn");
     const addWaitingPeople = document.getElementById("add-waiting-member");
 
-    function sleep(time) {
-        return new Promise((resolve) => setTimeout(resolve, time));
-    }
-    sleep(2500).then(() => {
-        qidRef = queuesRef.child(qid);
-        email = filterPath(getUserEmail());
-        userEmail = email;
-        qidRef.child("deskList").once("value", function (snapshot) {
-            keys = Object.keys(snapshot.val());
-            flag = false;
-            for (let i = 0; i < keys.length; i++) {
-                if (snapshot.val()[keys[i]]['email'] == email) {
-                    flag = true;
-                    break;
+  
+    firebase.auth().onAuthStateChanged(function(user) {
+		if (user) {
+		  
+
+            qidRef = queuesRef.child(qid);
+            email = filterPath(user.email);
+            
+            qidRef.child("deskList").once("value", function (snapshot) {
+                if(snapshot.val()==null){
+                    return;
                 }
-                else {
-                    //console.log(snapshot.val()[keys[i]]['email']);
-                }
-            }
-            if (flag) {
-
-                addWaitingPeople.addEventListener("click", () => {
-                    console.log("add people button clicked");
-
-                    /// get new people works...
-                    const newPeopleAdd = document.getElementById("newPeopleAdd");
-                    newPeopleAdd.addEventListener("click", () => {
-                        const newPeopleInput = document.getElementById("newPeopleInput");
-                        if (newPeopleInput.value !== "") {
-                            console.log(qid, newPeopleInput.value);
-                            addPeople(qid, newPeopleInput.value);
-                            newPeopleInput.value = "";
-                        }
-                    });
-                });
-                addWaitingPeople.innerHTML = `<button data-toggle="modal" data-target="#addPeopleBtnModal" type="button" id="addPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
-            }
-            else {
-                //return false
-            }
-        });
-
-
-
-        qidRef.child("counterList").once("value", function (snapshot) {
-            keys = Object.keys(snapshot.val());
-            flag = false;
-            myCounterNumber="";
-            for (let i = 0; i < keys.length; i++) {
-                if (snapshot.val()[keys[i]]['email'] == email) {
-                    flag = true;
-                    myCounterNumber=keys[i];
-                    break;
-                }
-                else {
-                    //console.log(snapshot.val()[keys[i]]['email']);
-                }
-            }
-            if (flag) {
-
-                callPeopleBtn.addEventListener("click", () => {
-                    console.log("call people button clicked");
-                    if(myCounterNumber!=""){
-                        callPeople(qid,myCounterNumber);
+                keys = Object.keys(snapshot.val());
+                flag = false;
+                for (let i = 0; i < keys.length; i++) {
+                    if (snapshot.val()[keys[i]]['email'] == email) {
+                        flag = true;
+                        break;
                     }
+                    else {
+                        //console.log(snapshot.val()[keys[i]]['email']);
+                    }
+                }
+                if (flag) {
+    
+                    addWaitingPeople.addEventListener("click", () => {
+                        console.log("add people button clicked");
+    
+                        /// get new people works...
+                        const newPeopleAdd = document.getElementById("newPeopleAdd");
+                        newPeopleAdd.addEventListener("click", () => {
+                            const newPeopleInput = document.getElementById("newPeopleInput");
+                            if (newPeopleInput.value !== "") {
+                                console.log(qid, newPeopleInput.value);
+                                addPeople(qid, newPeopleInput.value);
+                                newPeopleInput.value = "";
+                            }
+                        });
+                    });
+                    addWaitingPeople.innerHTML = `<button data-toggle="modal" data-target="#addPeopleBtnModal" type="button" id="addPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
+                }
+                else {
+                    //return false
+                }
+            });
+    
+            qidRef.child("counterList").once("value", function (snapshot) {
+                if(snapshot.val()==null){
+                    return;
+                }
+                keys = Object.keys(snapshot.val());
+                flag = false;
+                myCounterNumber="";
+                for (let i = 0; i < keys.length; i++) {
+                    if (snapshot.val()[keys[i]]['email'] == email) {
+                        flag = true;
+                        myCounterNumber=keys[i];
+                        break;
+                    }
+                    else {
+                        //console.log(snapshot.val()[keys[i]]['email']);
+                    }
+                }
+                if (flag) {
+    
+                    callPeopleBtn.addEventListener("click", () => {
+                        console.log("call people button clicked");
+                        if(myCounterNumber!=""){
+                            callPeople(qid,myCounterNumber);
+                        }
+    
+                    });
+                    callPeopleBtn.innerHTML = `<button id="callPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
+                }
+                else {
+                    //return false
+                }
+            });
+    
 
-                });
-                callPeopleBtn.innerHTML = `<button id="callPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
-            }
-            else {
-                //return false
-            }
-        });
-
-    });
-
-
+		} else {
+		  // No user is signed in.
+		}
+	  });
+ 
     // in service member list ui rendering code ... 
 
     const inServicePeople = document.getElementById("in-service-members");
@@ -230,8 +261,9 @@ const mainUi = (param) => {
 
     const arrInServicePeople = Object.keys(serviceList);
     serialNo.innerText = `${arrInServicePeople[arrInServicePeople.length - 1]}`;
-    counterNo.innerText = `counter no: ${serviceList[arrInServicePeople.length]["counter"]}`;
-
+    
+    counterNo.innerText = `counter no: ${serviceList[arrInServicePeople[arrInServicePeople.length-1]]["counter"]}`;
+    
     for (let i = arrInServicePeople.length - 1; i >= 0; i--) {
         const { name, counter } = serviceList[arrInServicePeople[i]];
         const singleInServiceMember = document.createElement("h4");

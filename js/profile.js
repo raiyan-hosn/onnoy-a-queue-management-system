@@ -39,5 +39,5 @@ const profileContainer = document.getElementById("profile-container");
 			<h5 class="my-3">Email of user</h5>
 			
 		</div>
-		<marquee>If you want to change your profile name and picture, at first change it to your google accout.</marquee>
+		<p>If you want to change your profile name and picture, at first change it to your google accout.</p>
 	`;

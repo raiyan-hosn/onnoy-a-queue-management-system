@@ -36,6 +36,13 @@ function createQueue(newQueue) {
             notice: notice,
             lastSL: lastSL
         });
+    addToPrevious(owner,qid,"owner");
+}
+function addToPrevious(email,qid,access){
+    email=filterPath(email);
+    usersRef.child(email+"/previousList").update({
+        [qid]: access
+    });
 }
 function joinQueue(qid) {
     queuesRef.child(qid).on("value", function (snapshot) {
@@ -186,11 +193,6 @@ function updateNoticeBoard(qid,notice)
     
     
 }
-function showInviteList(email){
- 
-}
-
-
 
 function addCounter(qid){
     qidRef = queuesRef.child(qid);

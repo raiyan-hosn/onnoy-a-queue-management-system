@@ -1,25 +1,13 @@
 
-let inviteQueue = "";
+
 for (let i = 0; i < arr.length; i++) {
-	inviteQueue =
-		inviteQueue +
-		`<div class="col-md-4 col-sm-6">
-			<div class='prev-item'>
-				<h3>Title: ${arr[i].title}</h3>
-				<h4 class='prev-item-id'>ID: ${arr[i].id}<h4>
-				<h4>time: ${arr[i].time}<h4>
-				<h4>access: ${arr[i].access}<h4>
-				<h4>owner: rayhan<h4>
-				<div class="accept-decline-btn">
-					<button class="accpet-btn">Accept</button>
-                    <button class="decline-btn">Decline</button>
-				</div>
-			</div>
-  </div>`;
+	
 }
 
 const inviteContainer = document.getElementById("invite-container");
-inviteContainer.innerHTML = inviteQueue;
+
+
+let inviteQueue = "";
 
 
 firebase.auth().onAuthStateChanged(function (user) {
@@ -33,7 +21,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 				
 			}else{
 				let qidList=Object.keys(snapshot.val());
-				
+				inviteQueue = "";
 				for(let i=0;i<Object.keys(snapshot.val()).length;i++){
 					let qid=qidList[i];
 					let access=snapshot.val()[qid];
@@ -45,10 +33,26 @@ firebase.auth().onAuthStateChanged(function (user) {
 							let title= snapshot.val().tittle;
 							let time=snapshot.val().time;
 							let owner=snapshot.val().owner;
+							owner = antiFilterPath(owner); 
 							
 							///inter your html here
-
+							inviteQueue =
+											inviteQueue +
+											`<div class="col-md-4 col-sm-6">
+												<div class='prev-item'>
+													<h3>Title: ${title}</h3>
+													<h4>ID: ${qid}<h4>
+													<h4>time: ${time}<h4>
+													<h4>access: ${access}<h4>
+													<h4>owner: ${owner}<h4>
+													<div class="accept-decline-btn">
+														<button class="${qid} accpet-btn" name="invitation-accept" class="accpet-btn">Accept</button>
+														<button class="${qid} decline-btn" name="invitation-decline" class="decline-btn">Decline</button>
+													</div>
+												</div>
+									</div>`;
 						}
+						inviteContainer.innerHTML = inviteQueue;
 					});
 				}
 			}
@@ -58,3 +62,15 @@ firebase.auth().onAuthStateChanged(function (user) {
 	}
 });
 
+
+
+inviteContainer.addEventListener("click", e => {
+	if(e.target.tagName === "BUTTON"){
+		if(e.target.name === "invitation-accept"){
+			console.log(`accept button clicked and id = ${e.target.classList[0]}`);
+		}
+		else if(e.target.name === "invitation-decline"){
+			console.log(`decline button clicked and id = ${e.target.classList[0]}`);
+		}
+	}
+})

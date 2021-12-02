@@ -125,122 +125,134 @@ const mainUi = (param) => {
     queueIdUi.innerText = `${qid}`;
 
     // notice in ui
-    qidRef = queuesRef.child(qid);
-    email = filterPath(getUserEmail());
-    qidRef.child("owner").once("value", function (snapshot) {
-        if (snapshot.val() == email) {
-            // return true
-            const editNotice = document.getElementById("edit-notice");
-            editNotice.innerHTML = `<button id="editNoticeBtn" data-toggle="modal" data-target="#notice" type="button"><i class="fas fa-edit"></i></button>`;
-            editNotice.addEventListener("click", () => {
-                // Edit notice Btn works ....
-               
-                const newNoticeAdd = document.getElementById("newNoticeAdd");
-                newNoticeAdd.addEventListener("click", () => {
-                    const newNoticeInput = document.getElementById("newNoticeInput");
-                    if (newNoticeInput.value !== "") {
-                        console.log(newNoticeInput.value);
-                        updateNoticeBoard(qid,newNoticeInput.value)
-                        newNoticeInput.value = "";
-                    }
-                });
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            // User is signed in.
+            
+            qidRef = queuesRef.child(qid);
+            email = filterPath(user.email);
+            qidRef.child("owner").once("value", function (snapshot) {
+                if (snapshot.val() == email) {
+                    // return true
+                    const editNotice = document.getElementById("edit-notice");
+                    editNotice.innerHTML = `<button id="editNoticeBtn" data-toggle="modal" data-target="#notice" type="button"><i class="fas fa-edit"></i></button>`;
+                    editNotice.addEventListener("click", () => {
+                        // Edit notice Btn works ....
+                       
+                        const newNoticeAdd = document.getElementById("newNoticeAdd");
+                        newNoticeAdd.addEventListener("click", () => {
+                            const newNoticeInput = document.getElementById("newNoticeInput");
+                            if (newNoticeInput.value !== "") {
+                                console.log(newNoticeInput.value);
+                                updateNoticeBoard(qid,newNoticeInput.value)
+                                newNoticeInput.value = "";
+                            }
+                        });
+                    });
+                
+                }
+                else {
+                    //return false
+                }
             });
+         
         
-        }
-        else {
-            //return false
+
+        } else {
+            // No user is signed in.
         }
     });
- 
-
+  
     ////////////////
 
     const callPeopleBtn = document.getElementById("callPeopleBtn");
     const addWaitingPeople = document.getElementById("add-waiting-member");
 
-    function sleep(time) {
-        return new Promise((resolve) => setTimeout(resolve, time));
-    }
-    sleep(2500).then(() => {
-        qidRef = queuesRef.child(qid);
-        email = filterPath(getUserEmail());
-        userEmail = email;
-        qidRef.child("deskList").once("value", function (snapshot) {
-            if(snapshot.val()==null){
-                return;
-            }
-            keys = Object.keys(snapshot.val());
-            flag = false;
-            for (let i = 0; i < keys.length; i++) {
-                if (snapshot.val()[keys[i]]['email'] == email) {
-                    flag = true;
-                    break;
+  
+    firebase.auth().onAuthStateChanged(function(user) {
+		if (user) {
+		  
+
+            qidRef = queuesRef.child(qid);
+            email = filterPath(user.email);
+            
+            qidRef.child("deskList").once("value", function (snapshot) {
+                if(snapshot.val()==null){
+                    return;
                 }
-                else {
-                    //console.log(snapshot.val()[keys[i]]['email']);
-                }
-            }
-            if (flag) {
-
-                addWaitingPeople.addEventListener("click", () => {
-                    console.log("add people button clicked");
-
-                    /// get new people works...
-                    const newPeopleAdd = document.getElementById("newPeopleAdd");
-                    newPeopleAdd.addEventListener("click", () => {
-                        const newPeopleInput = document.getElementById("newPeopleInput");
-                        if (newPeopleInput.value !== "") {
-                            console.log(qid, newPeopleInput.value);
-                            addPeople(qid, newPeopleInput.value);
-                            newPeopleInput.value = "";
-                        }
-                    });
-                });
-                addWaitingPeople.innerHTML = `<button data-toggle="modal" data-target="#addPeopleBtnModal" type="button" id="addPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
-            }
-            else {
-                //return false
-            }
-        });
-
-
-
-        qidRef.child("counterList").once("value", function (snapshot) {
-            if(snapshot.val()==null){
-                return;
-            }
-            keys = Object.keys(snapshot.val());
-            flag = false;
-            myCounterNumber="";
-            for (let i = 0; i < keys.length; i++) {
-                if (snapshot.val()[keys[i]]['email'] == email) {
-                    flag = true;
-                    myCounterNumber=keys[i];
-                    break;
-                }
-                else {
-                    //console.log(snapshot.val()[keys[i]]['email']);
-                }
-            }
-            if (flag) {
-
-                callPeopleBtn.addEventListener("click", () => {
-                    console.log("call people button clicked");
-                    if(myCounterNumber!=""){
-                        callPeople(qid,myCounterNumber);
+                keys = Object.keys(snapshot.val());
+                flag = false;
+                for (let i = 0; i < keys.length; i++) {
+                    if (snapshot.val()[keys[i]]['email'] == email) {
+                        flag = true;
+                        break;
                     }
+                    else {
+                        //console.log(snapshot.val()[keys[i]]['email']);
+                    }
+                }
+                if (flag) {
+    
+                    addWaitingPeople.addEventListener("click", () => {
+                        console.log("add people button clicked");
+    
+                        /// get new people works...
+                        const newPeopleAdd = document.getElementById("newPeopleAdd");
+                        newPeopleAdd.addEventListener("click", () => {
+                            const newPeopleInput = document.getElementById("newPeopleInput");
+                            if (newPeopleInput.value !== "") {
+                                console.log(qid, newPeopleInput.value);
+                                addPeople(qid, newPeopleInput.value);
+                                newPeopleInput.value = "";
+                            }
+                        });
+                    });
+                    addWaitingPeople.innerHTML = `<button data-toggle="modal" data-target="#addPeopleBtnModal" type="button" id="addPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
+                }
+                else {
+                    //return false
+                }
+            });
+    
+            qidRef.child("counterList").once("value", function (snapshot) {
+                if(snapshot.val()==null){
+                    return;
+                }
+                keys = Object.keys(snapshot.val());
+                flag = false;
+                myCounterNumber="";
+                for (let i = 0; i < keys.length; i++) {
+                    if (snapshot.val()[keys[i]]['email'] == email) {
+                        flag = true;
+                        myCounterNumber=keys[i];
+                        break;
+                    }
+                    else {
+                        //console.log(snapshot.val()[keys[i]]['email']);
+                    }
+                }
+                if (flag) {
+    
+                    callPeopleBtn.addEventListener("click", () => {
+                        console.log("call people button clicked");
+                        if(myCounterNumber!=""){
+                            callPeople(qid,myCounterNumber);
+                        }
+    
+                    });
+                    callPeopleBtn.innerHTML = `<button id="callPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
+                }
+                else {
+                    //return false
+                }
+            });
+    
 
-                });
-                callPeopleBtn.innerHTML = `<button id="callPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
-            }
-            else {
-                //return false
-            }
-        });
-
-    });
-
-
+		} else {
+		  // No user is signed in.
+		}
+	  });
+ 
     // in service member list ui rendering code ... 
 
     const inServicePeople = document.getElementById("in-service-members");

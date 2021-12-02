@@ -5,8 +5,8 @@ function signInWithGoogle() {
 		//provider.addScope('https://www.googleapis.com/auth/plus.login');
 		firebase.auth().signInWithRedirect(provider);
 	} else {
-		console.log("already signed in");
-		console.log(firebase.auth().currentUser.photoURL);
+		// console.log("already signed in");
+		// console.log(firebase.auth().currentUser.photoURL);
 	}
 }
 function isSignedIn() {

@@ -1,12 +1,4 @@
-// const obj = {
-// 	title: "bank queue",
-// 	id: "uerw-kerj-ekr",
-// 	time: "10 am, 13 June 2021",
-// 	owner: "abc@gmail.com",
-// 	access: "desk",
-// };
 
-// const arr = [obj, obj, obj, obj, obj, obj];
 let inviteQueue = "";
 for (let i = 0; i < arr.length; i++) {
 	inviteQueue =
@@ -28,3 +20,41 @@ for (let i = 0; i < arr.length; i++) {
 
 const inviteContainer = document.getElementById("invite-container");
 inviteContainer.innerHTML = inviteQueue;
+
+
+firebase.auth().onAuthStateChanged(function (user) {
+	if (user) {
+		// User is signed in.
+		let email=user.email;
+		email=filterPath(email);
+		usersRef.child(email+"/inviteList").on("value",function(snapshot){
+			if(snapshot.val()==null){
+				//not found
+				
+			}else{
+				let qidList=Object.keys(snapshot.val());
+				
+				for(let i=0;i<Object.keys(snapshot.val()).length;i++){
+					let qid=qidList[i];
+					let access=snapshot.val()[qid];
+					queuesRef.child(qid).on("value",function(snapshot){
+						if(snapshot.val()==null){
+							//queue not found
+						}
+						else{
+							let title= snapshot.val().tittle;
+							let time=snapshot.val().time;
+							let owner=snapshot.val().owner;
+							
+							///inter your html here
+
+						}
+					});
+				}
+			}
+		});
+	} else {
+		// No user is signed in.
+	}
+});
+

@@ -186,6 +186,12 @@ function updateNoticeBoard(qid,notice)
     
     
 }
+function showInviteList(email){
+ 
+}
+
+
+
 function addCounter(qid){
     qidRef = queuesRef.child(qid);
     email= userEmail;

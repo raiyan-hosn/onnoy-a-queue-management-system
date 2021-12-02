@@ -34,6 +34,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 							let time=snapshot.val().time;
 							let owner=snapshot.val().owner;
 							owner = antiFilterPath(owner); 
+							console.log(owner);
 							
 							///inter your html here
 							inviteQueue =
@@ -41,10 +42,10 @@ firebase.auth().onAuthStateChanged(function (user) {
 											`<div class="col-md-4 col-sm-6">
 												<div class='prev-item'>
 													<h3>Title: ${title}</h3>
-													<h4>ID: ${qid}<h4>
+													<h4>ID: <span class="text-lowercase">${qid}</span><h4>
 													<h4>time: ${time}<h4>
 													<h4>access: ${access}<h4>
-													<h4>owner: ${owner}<h4>
+													<h4 class="text-lowercase">owner: ${owner}<h4>
 													<div class="accept-decline-btn">
 														<button class="${qid} accpet-btn" name="invitation-accept" class="accpet-btn">Accept</button>
 														<button class="${qid} decline-btn" name="invitation-decline" class="decline-btn">Decline</button>

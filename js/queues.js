@@ -96,13 +96,25 @@ function addToDesk(email,qid){
     });
 }
 function deleteFromInviteLists(email,qid){
-    
+    email=filterPath(email);
+    //remove from qid
+    queuesRef.child(qid+"/inviteList/"+email).remove();
+
+    //remove from userid
+    usersRef.child(email+"/inviteList/"+qid).remove();
+
 } 
 function acceptInvitation(email,qid,access){
-
+    if(access=="Counter"){
+        addToCounter(email,qid);
+    }
+    else if(access=="Desk"){
+        addToDesk(email,qid);
+    }
+    deleteFromInviteLists(email,qid);
 }
 function declineInvitation(email,qid){
-
+    deleteFromInviteLists(email,qid);
 }
 function joinQueue(qid) {
     queuesRef.child(qid).on("value", function (snapshot) {

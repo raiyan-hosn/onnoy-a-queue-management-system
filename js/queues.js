@@ -181,6 +181,9 @@ function callPeople(qid,counter) {
     
     qidRef = queuesRef.child(qid);
     qidRef.child("waitingList").once("value", function (snapshot) {
+      if(snapshot.val()==null){
+
+      }else{
         let firstKey=Object.keys(snapshot.val())[0];
         let peopleName=snapshot.val()[firstKey];
         
@@ -193,6 +196,7 @@ function callPeople(qid,counter) {
             name: peopleName
         });
 
+      }
     });
 }
 
@@ -258,7 +262,7 @@ function canUpdateNoticeboard(qid){
 }
 function updateNoticeBoard(qid,notice)
 {
-    email=userEmail;
+
     qidRef = queuesRef.child(qid).update({
         notice: notice
     });

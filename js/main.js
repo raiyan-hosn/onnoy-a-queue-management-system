@@ -300,6 +300,7 @@ joinQueueBtn.addEventListener("click", () => {
     if (joinQueueText.value !== "") {
         joinQueue(joinQueueText.value);
     }
+    joinQueueText.value = "";
 });
 
 const failToJoin = () => {

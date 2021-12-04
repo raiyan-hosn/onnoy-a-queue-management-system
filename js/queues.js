@@ -2,6 +2,7 @@
 var queuesRef = firebase.database().ref("queues");
 function createQueue(newQueue) {
     let qid = createKey();
+    queueIdShow(qid);
     let tittle = newQueue.queueTitle;
     let time = newQueue.queueDate;
     let type = newQueue.queueDeskType;

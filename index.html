@@ -124,33 +124,35 @@
 
 		<section id="create" class="create-area container hide">
 			<h2>Create</h2>
-			<form id="createQueueForm" class="col-md-6 mx-auto  text-center">
-				<div class="mb-3">
-					<input id="queueTitle" type="text" class="form-control" placeholder="Enter A Title" required>
+			<div id="create-container">
+				<form id="createQueueForm" class="col-md-6 mx-auto  text-center">
+					<div class="mb-3">
+						<input id="queueTitle" type="text" class="form-control" placeholder="Enter A Title" required>
+					</div>
+					<div class="mb-3">
+						<input id="create-date" type="date"  class="form-control" required>
+					</div>
+					<!-- <select id="queue-desk-type" class="form-select" aria-label="Default select example">
+						<option selected value="desk-record">Desk Record</option>
+						<option value="fixed-counter">Fixed Counter</option>
+					</select> -->
+					
+					<button onclick="handleCreateQueue()" type="button" class="button mt-3">Submit</button>
+					
+				</form>
+				<div class="col-md-6 mx-auto  text-center">
+				<div class="input-group mt-3">
+					<input id="invitedEmailInput" type="Email" class="form-control" placeholder="Inviete Someone" aria-label="Recipient's username with two button addons">
+					<select id="invitedEmailType" class="form-select" aria-label="Default select example">
+						<option value="Desk">Desk</option>
+						<option value="Counter">Counter</option>
+					</select>
+					<button id="invitedEmailButton" class="btn" type="button"><i class="fas fa-plus"></i></button>
 				</div>
-				<div class="mb-3">
-					<input id="create-date" type="date"  class="form-control" required>
+				<div class="invited-email text-center">
+					<div id="invited-eamil-area"></div>
+				  </div>
 				</div>
-				<!-- <select id="queue-desk-type" class="form-select" aria-label="Default select example">
-					<option selected value="desk-record">Desk Record</option>
-					<option value="fixed-counter">Fixed Counter</option>
-				</select> -->
-				
-				<button onclick="handleCreateQueue()" type="button" class="button mt-3">Submit</button>
-				
-			</form>
-			<div class="col-md-6 mx-auto  text-center">
-			<div class="input-group mt-3">
-				<input id="invitedEmailInput" type="Email" class="form-control" placeholder="Inviete Someone" aria-label="Recipient's username with two button addons">
-				<select id="invitedEmailType" class="form-select" aria-label="Default select example">
-					<option value="Desk">Desk</option>
-					<option value="Counter">Counter</option>
-				</select>
-				<button id="invitedEmailButton" class="btn" type="button"><i class="fas fa-plus"></i></button>
-			</div>
-			<div class="invited-email text-center">
-				<div id="invited-eamil-area"></div>
-			  </div>
 			</div>
 		</section>
 

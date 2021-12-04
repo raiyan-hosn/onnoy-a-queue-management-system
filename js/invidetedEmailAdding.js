@@ -78,8 +78,8 @@ const newAddPerson = (email, type, index) => {
 };
 
 const handleCreateQueue = () => {
-  const queueTitle = document.getElementById("queueTitle").value;
-  const queueDate = document.getElementById("create-date").value;
+  let queueTitle = document.getElementById("queueTitle").value;
+  let queueDate = document.getElementById("create-date").value;
   // const queueDeskType = document.getElementById("queue-desk-type").value;
   const currentTime = new Date();
 
@@ -93,8 +93,16 @@ const handleCreateQueue = () => {
   };
   createQueue(newQueue);
   //Clear all field
-  queueTitle.value = "";
-  queueDate.value = "";
-  queueDeskType.value = "desk-record";
+  queueTitle = "";
+  queueDate = "";
+  queueDeskType = "desk-record";
   invitedEmails.splice(0, invitedEmails.length);
+
+  document.getElementById("create-container");
 };
+
+const queueIdShow = (qid) => {
+  const createContqainer = document.getElementById("create-container");
+  createContqainer.innerHTML = ``;
+  createContqainer.innerHTML = `<h3>Your Queue ID is: ${qid}</h3>`;
+}

@@ -41,23 +41,26 @@ const newAddPerson = (email, type, index) => {
       listItem.classList.add("align-items-center");
       listItem.classList.add("mx-auto");
       listItem.classList.add("my-2");
+      listItem.classList.add("p-2");
+      listItem.classList.add("bg-light");
+      listItem.classList.add("rounded");
 
       listItem.innerHTML = `
-                <div class="row col m-0 invitedEmail-item-info d-flex justify-content-center align-items-center">
-                  <div class="invitedEmail-item-info-img col-3">
-                    <img src="${photoURL}"/>
-                  </div>
-                  <div class="col-6">
-                    <h5>${name}</h5>
-                    <h6>${email}</h6>
-                  </div>
-                  <div class="col-3">
-                    <h5>${type}</h5>
-                  </div>
+                  <div class="row col-9 m-0 invitedEmail-item-info d-flex justify-content-center align-items-center">
+                    <div class="invitedEmail-item-info-img col-3">
+                      <img src="${photoURL}"/>
+                    </div>
+                    <div class="col-6">
+                      <h5>${name}</h5>
+                      <h6>${email}</h6>
+                    </div>
+                    <div class="col-3">
+                      <h5>${type}</h5>
+                    </div>
                 </div>
-                <div class="trash invitedEmail-item-trash rounded-circle col-3">
-                  <div><i class="trash fas fa-times"></i></div>
-                </div>
+                  <div class="trash invitedEmail-item-trash rounded-circle col-3">
+                    <div><i class="trash fas fa-times"></i></div>
+                  </div>
               `;
 
       listItem.addEventListener("click", function (event) {

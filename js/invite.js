@@ -32,11 +32,11 @@ firebase.auth().onAuthStateChanged(function (user) {
 													<h3>Title: ${title}</h3>
 													<h4>ID: <span class="text-lowercase">${qid}</span><h4>
 													<h4>time: ${time}<h4>
-													<h4>access: ${access}<h4>
+													<h4>access: <span class="invitation-desk">${access}<span><h4>
 													<h4 class="text-lowercase">owner: ${owner}<h4>
 													<div class="accept-decline-btn">
-														<button class="${qid} accpet-btn" name="invitation-accept" class="accpet-btn">Accept</button>
-														<button class="${qid} decline-btn" name="invitation-decline" class="decline-btn">Decline</button>
+														<button currentUserEmail="${email}" deskType="${access}" class="${qid} accpet-btn" name="invitation-accept" class="accpet-btn">Accept</button>
+														<button currentUserEmail="${email}" class="${qid} decline-btn" name="invitation-decline" class="decline-btn">Decline</button>
 													</div>
 												</div>
 									</div>`;
@@ -51,15 +51,13 @@ firebase.auth().onAuthStateChanged(function (user) {
 	}
 });
 
-
-
 inviteContainer.addEventListener("click", e => {
 	if(e.target.tagName === "BUTTON"){
 		if(e.target.name === "invitation-accept"){
-			console.log(`accept button clicked and id = ${e.target.classList[0]}`);
+			acceptInvitation(e.target.getAttribute("currentUserEmail"), e.target.classList[0], e.target.getAttribute("deskType"));
 		}
 		else if(e.target.name === "invitation-decline"){
-			console.log(`decline button clicked and id = ${e.target.classList[0]}`);
+			declineInvitation(e.target.getAttribute("currentUserEmail"), e.target.classList[0]);
 		}
 	}
-})
+});

@@ -1,14 +1,4 @@
-
-
-for (let i = 0; i < arr.length; i++) {
-	
-}
-
 const inviteContainer = document.getElementById("invite-container");
-
-
-let inviteQueue = "";
-
 
 firebase.auth().onAuthStateChanged(function (user) {
 	if (user) {
@@ -21,7 +11,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 				
 			}else{
 				let qidList=Object.keys(snapshot.val());
-				inviteQueue = "";
+				let inviteQueue = "";
 				for(let i=0;i<Object.keys(snapshot.val()).length;i++){
 					let qid=qidList[i];
 					let access=snapshot.val()[qid];
@@ -33,9 +23,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 							let title= snapshot.val().tittle;
 							let time=snapshot.val().time;
 							let owner=snapshot.val().owner;
-							owner = antiFilterPath(owner); 
-							console.log(owner);
-							
+							owner = antiFilterPath(owner);
 							///inter your html here
 							inviteQueue =
 											inviteQueue +

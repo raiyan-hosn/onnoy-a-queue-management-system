@@ -1,6 +1,5 @@
 
 var queuesRef = firebase.database().ref("queues");
-var userEmail;
 function createQueue(newQueue) {
     let qid = createKey();
     let tittle = newQueue.queueTitle;
@@ -43,6 +42,79 @@ function addToPrevious(email,qid,access){
     usersRef.child(email+"/previousList").update({
         [qid]: access
     });
+}
+function addToCounter(email,qid){
+    qIdRef=queuesRef.child(qid);
+    email= filterPath(email);
+    qIdRef.child("counterList").once("value",function(snapshot){
+        if(snapshot.val()==null){
+            qIdRef.child("counterList").update(
+                {
+                    "1":{
+                        "email":email
+                    }
+                }
+            );
+
+        }else{
+            let lastKey= Object.keys(snapshot.val())[Object.keys(snapshot.val()).length-1];
+            lastKey= parseInt(lastKey)+1;
+            qIdRef.child("counterList").update(
+                {
+                    [lastKey]: {
+                        "email": email
+                    }
+            });
+        }
+       
+    });
+}
+function addToDesk(email,qid){
+    qIdRef=queuesRef.child(qid);
+    email= filterPath(email);
+    qIdRef.child("deskList").once("value",function(snapshot){
+        if(snapshot.val()==null){
+            qIdRef.child("deskList").update(
+                {
+                    "1":{
+                        "email":email
+                    }
+                }
+            );
+
+        }else{
+            let lastKey= Object.keys(snapshot.val())[Object.keys(snapshot.val()).length-1];
+            lastKey= parseInt(lastKey)+1;
+            qIdRef.child("deskList").update(
+                {
+                    [lastKey]: {
+                        "email": email
+                    }
+            });
+        }
+       
+    });
+}
+function deleteFromInviteLists(email,qid){
+    email=filterPath(email);
+    //remove from qid
+    queuesRef.child(qid+"/inviteList/"+email).remove();
+
+    //remove from userid
+    usersRef.child(email+"/inviteList/"+qid).remove();
+
+} 
+function acceptInvitation(email,qid,access){
+    if(access=="Counter"){
+        addToCounter(email,qid);
+    }
+    else if(access=="Desk"){
+        addToDesk(email,qid);
+    }
+    deleteFromInviteLists(email,qid);
+}
+function declineInvitation(email,qid){
+    deleteFromInviteLists(email,qid);
 }
 function joinQueue(qid) {
     queuesRef.child(qid).on("value", function (snapshot) {
@@ -109,6 +181,9 @@ function callPeople(qid,counter) {
     
     qidRef = queuesRef.child(qid);
     qidRef.child("waitingList").once("value", function (snapshot) {
+      if(snapshot.val()==null){
+
+      }else{
         let firstKey=Object.keys(snapshot.val())[0];
         let peopleName=snapshot.val()[firstKey];
         
@@ -121,6 +196,7 @@ function callPeople(qid,counter) {
             name: peopleName
         });
 
+      }
     });
 }
 
@@ -186,52 +262,10 @@ function canUpdateNoticeboard(qid){
 }
 function updateNoticeBoard(qid,notice)
 {
-    email=userEmail;
+
     qidRef = queuesRef.child(qid).update({
         notice: notice
     });
     
     
 }
-
-function addCounter(qid){
-    qidRef = queuesRef.child(qid);
-    email= userEmail;
-    qidRef.child("counterList").once("value",function(snapshot){
-        if(snapshot.val()==null){
-            qidRef.child("counterList").update(
-                {
-                    "1":{
-                        "email":email
-                    }
-                }
-            );
-
-        }
-        qidRef.child("counterList").update(
-            {
-                "1":{
-                    "email":email
-                }
-            }
-        );
-    });
-    
-}
-function add(qid,lastKey,email){
-    qidRef2 = queuesRef.child(qid);
-    qidRef2.child("counterList").update(
-        {
-            [lastKey]:{
-                "email":email
-            }
-        }
-    );
-}
-function addDesk(qid){
-
-}
-var arr2 = [
-    ["raiyan.hosn@gmail.com", "desk"],
-    ["raiyan15-10258@diu.edu.bd", "counter"]
-];

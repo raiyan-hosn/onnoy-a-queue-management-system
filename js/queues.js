@@ -111,6 +111,9 @@ function acceptInvitation(email,qid,access){
     else if(access=="Desk"){
         addToDesk(email,qid);
     }
+    //add to previous
+    addToPrevious(email,qid,access);
+    //delete from invite.
     deleteFromInviteLists(email,qid);
 }
 function declineInvitation(email,qid){

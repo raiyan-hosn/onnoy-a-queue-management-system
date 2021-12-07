@@ -12,7 +12,12 @@ function createKey(){
     }
     str= addChar(str,3,"-");
     str= addChar(str,8,"-");
-    return str;
+    
+    let key="";
+    for(let i=str.length-1;i>=0;i--){
+        key+=str[i];
+    }
+    return key;
 }
 
 function addChar(str, index,char)

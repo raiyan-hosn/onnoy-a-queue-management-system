@@ -29,7 +29,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 								let owner=snapshot.val().owner;
 								
 								prevQueue =
-										prevQueue +
+										
 										`<div class="col-md-4 col-sm-6">
 											<div class='prev-item'>
 												<h3>Title: ${title}</h3>
@@ -40,7 +40,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 													<button class="prev-details-btn">see details</button>
 												</div>
 											</div>
-								</div>`;
+								</div>` + prevQueue;
 							}
 							prevContainer.innerHTML = prevQueue;
 						});

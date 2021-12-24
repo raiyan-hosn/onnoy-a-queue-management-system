@@ -22,8 +22,8 @@ const mainUi = (param) => {
     }
 
     mainQueue.innerHTML = `
-        <div class="row mb-5">
-            <div class="col-md-9 mb-5">
+        <div class="row mb-3">
+            <div class="col-md-9">
                 <div class="counter-status">
                     <div class="row px-3 py-4">
                         <div class="col-md-6">
@@ -55,16 +55,6 @@ const mainUi = (param) => {
                         </div>
                     </div>
                 </div>
-                <div class="notice-area mt-4">
-                    <div class="row justify-content-center align-items-center px-3 ">
-                        <div class="col-3 py-3 notice-time"><h3>02:45 PM</h3></div>
-                        <div class="col-9 py-3 notice-details position-relative">
-                            <h3 class="fw-bolder">${notice}</h3>
-                            <div id="edit-notice" class="edit-notice">
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="col-md-3 people-waitng p-3 position-relative">
                 <h3 class="text-center py-3">People Waiting</h3>
@@ -74,6 +64,10 @@ const mainUi = (param) => {
                 </div>
             </div>
         </div>
+        <div class="text-center">
+            <div id="live-time" class="display-3">Time Is</div>
+        </div>
+        <marquee id="notice-board" class="bg-warning fw-bolder rounded p-2 display-4">${notice}</marquee>
 
         <!-- Modal addPeopleModa-->
         <div class="modal fade" id="addPeopleBtnModal" tabindex="-1" role="dialog" aria-labelledby="addPeopleBtnModalTitle" aria-hidden="true">
@@ -115,6 +109,19 @@ const mainUi = (param) => {
             </div>
         </div>
     `;
+
+    let liveTime = document.getElementById('live-time');
+
+    function getLiveTime() {
+    let d = new Date();
+    let s = d.getSeconds();
+    let m = d.getMinutes();
+    let h = d.getHours();
+    liveTime.textContent = 
+        ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
+    }
+
+    setInterval(getLiveTime, 1000);
 
 
     // queue title in ui 

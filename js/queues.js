@@ -105,6 +105,20 @@ function deleteFromInviteLists(email,qid){
     usersRef.child(email+"/inviteList/"+qid).remove();
 
 } 
+function removeFromCounter(email,qid){
+    email=filterPath(email);
+    //remove from qid
+    queuesRef.child(qid+"/counterList/"+email).remove();
+    //remove from userid previous
+    usersRef.child(email+"/previousList/"+qid).remove();
+}
+function removeFromDesk(email,qid){
+    email=filterPath(email);
+    //remove from qid
+    queuesRef.child(qid+"/deskList/"+email).remove();
+    //remove from userid previous
+    usersRef.child(email+"/previousList/"+qid).remove();
+}
 function acceptInvitation(email,qid,access){
     if(access=="Counter"){
         addToCounter(email,qid);
@@ -273,3 +287,30 @@ function updateNoticeBoard(qid,notice)
     
     
 }
+function seeDetails(qid){
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            let email=filterPath(user.email);
+            queuesRef.child(qid).on("value",function(snapshot){
+                let owner=snapshot.val().owner;
+                let title=snapshot.val().tittle;
+                let time=snapshot.val().time;
+                let inviteList=snapshot.val().inviteList;
+                let counterList=snapshot.val().counterList;
+                let deskList=snapshot.val().deskList;
+
+                let param={
+                    owner,
+                    title,
+                    time,
+                    inviteList,
+                    counterList,
+                    deskList
+                };
+                return param;
+            });
+        }
+    });
+}
+
+

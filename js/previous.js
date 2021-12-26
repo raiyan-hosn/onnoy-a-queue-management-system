@@ -65,28 +65,6 @@ const myfunction = (params, calledFrom) => {
         counterList,
         deskList,
     } = params;
-    console.log("invite list ", inviteList);
-    console.log("counter list ", counterList[1]);
-    console.log("desk list", deskList);
-    let counterListLi = ``;
-    if (counterList === undefined) {
-        counterListLi = `No one is in the Counter List`;
-    } else {
-        for (const e of counterList[1]) {
-            console.log(counterListLi);
-            const li = `<li>${e}</li>`;
-            counterListLi = counterListLi + li;
-        }
-    }
-    let invitedListLi = ``;
-    if (inviteList === undefined) {
-        invitedListLi = `No one is in the Invited List`;
-    } else {
-        for (const e in inviteList) {
-            const li = `<li>${e}</li>`;
-            invitedListLi = invitedListLi + li;
-        }
-    }
 
     prevContainer.innerHTML = `
         <div class="row">
@@ -103,26 +81,174 @@ const myfunction = (params, calledFrom) => {
             <div class="col-sm-4">
                 <div class="p-3 bg-light rounded-3">
                     <h4 class="text-center">Counter</h4>
-                    <ul>
-                        ${counterListLi}
+                    <ul id="counterListLi">
                     </ul>
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="p-3 bg-light rounded-3">
                     <h4 class="text-center">Desk</h4>
+                    <ul id="deskListLi">
+                    </ul>
                 </div>
             </div>
             <div class="col-sm-4">
+                <div class="input-group">
+					<input id="invitedEmailInput" type="Email" class="form-control" placeholder="Inviete Someone" aria-label="Recipient's username with two button addons">
+					<select id="invitedEmailType" class="form-select" aria-label="Default select example">
+						<option value="Desk">Desk</option>
+						<option value="Counter">Counter</option>
+					</select>
+					<button id="invitedEmailButton" class="btn" type="button"><i class="fas fa-plus"></i></button>
+				</div>
                 <div class="p-3 bg-light rounded-3">
                     <h4 class="text-center">invited list</h4>
-                    <ul>
-                        ${invitedListLi}
+                    <ul id="inviteListLi">
                     </ul>
                 </div>
             </div>
         </div>
+
+        <div class="my-4 text-center"><button class="button fw-bold">Privious</button></div>
     `;
+
+    if (counterList === undefined || counterList === null) {
+        document.getElementById("counterListLi").innerHTML = `
+            <li>Counter List is Empty</li>
+        `;
+    } else {
+        let counterListKeys = Object.keys(counterList);
+        for (const e of counterListKeys) {
+            console.log(counterList[e].email);
+            let email = counterList[e].email;
+            email = filterPath(email);
+            usersRef.child(email).once("value", function (snapshot) {
+                if (snapshot != null) {
+                    console.log(snapshot.val().name);
+                    let counterListSingleLi = document.createElement("li");
+                    counterListSingleLi.classList.add("bg-white");
+                    counterListSingleLi.classList.add("mx-2");
+                    counterListSingleLi.classList.add("rounded");
+                    counterListSingleLi.innerHTML = `
+                    <div class="row align-items-center">
+                        <div class="col-9">
+                            <div>Name: ${snapshot.val().name}</div>
+                            <div>Email: ${antiFilterPath(email)}</div>
+                            <div>Counter No: ${e}</div>
+                        </div>
+                        <div class="col-3">
+                            <button class="removeFromCounter"><i class="fas fa-user-minus"></i></button>
+                        </div>
+                    </div>
+                    `;
+
+                    document
+                        .getElementById("counterListLi")
+                        .appendChild(counterListSingleLi);
+                    document
+                        .getElementById("counterListLi")
+                        .addEventListener("click", (e) => {
+                            if (e.target.classList[0] === "removeFromCounter") {
+                                console.log(qid, email);
+                                // Eikhane counter list theke remove er code likhbi(tawhid)
+                            }
+                        });
+                }
+            });
+        }
+    }
+
+    if (deskList === undefined || deskList === null) {
+        document.getElementById("deskListLi").innerHTML = `
+            <li>Desk List is Empty</li>
+        `;
+    } else {
+        let deskListKeys = Object.keys(deskList);
+        for (const e of deskListKeys) {
+            console.log(deskList[e].email);
+            let email = deskList[e].email;
+            email = filterPath(email);
+            usersRef.child(email).once("value", function (snapshot) {
+                if (snapshot != null) {
+                    console.log(snapshot.val().name);
+                    let deskListSingleLi = document.createElement("li");
+                    deskListSingleLi.classList.add("bg-white");
+                    deskListSingleLi.classList.add("mx-2");
+                    deskListSingleLi.classList.add("rounded");
+                    deskListSingleLi.innerHTML = `
+                    <div class="row align-items-center">
+                        <div class="col-9">
+                            <div>Name: ${snapshot.val().name}</div>
+                            <div>Email: ${antiFilterPath(email)}</div>
+                            <div>Desk No: ${e}</div>
+                        </div>
+                        <div class="col-3">
+                            <button class="removeFromDesk"><i class="fas fa-user-minus"></i></button>
+                        </div>
+                    </div>
+                    `;
+
+                    document
+                        .getElementById("deskListLi")
+                        .addEventListener("click", (e) => {
+                            if (e.target.classList[0] === "removeFromDesk") {
+                                console.log(qid, email);
+                                // Eikhane desk list theke remove er code likhbi(tawhid)
+                            }
+                        });
+
+                    document
+                        .getElementById("deskListLi")
+                        .appendChild(deskListSingleLi);
+                }
+            });
+        }
+    }
+
+    if (inviteList === undefined || inviteList === null) {
+        document.getElementById("inviteListLi").innerHTML = `
+            <li>Invite List is Empty</li>
+        `;
+    } else {
+        let inviteListKeys = Object.keys(inviteList);
+        for (const e of inviteListKeys) {
+            let email = e;
+            email = filterPath(email);
+            usersRef.child(email).once("value", function (snapshot) {
+                if (snapshot != null) {
+                    console.log(snapshot.val().name);
+                    let inviteListSingleLi = document.createElement("li");
+                    inviteListSingleLi.classList.add("bg-white");
+                    inviteListSingleLi.classList.add("mx-2");
+                    inviteListSingleLi.classList.add("rounded");
+                    inviteListSingleLi.innerHTML = `
+                    <div class="row align-items-center">
+                        <div class="col-9">
+                            <div>Name: ${snapshot.val().name}</div>
+                            <div>Email: ${antiFilterPath(email)}</div>
+                        </div>
+                        <div class="col-3">
+                            <button class="removeFromInvite"><i class="fas fa-user-minus"></i></button>
+                        </div>
+                    </div>
+                    `;
+
+                    document
+                        .getElementById("inviteListLi")
+                        .addEventListener("click", (e) => {
+                            if (e.target.classList[0] === "removeFromInvite") {
+                                console.log(qid, email);
+                                // Eikhane desk list theke remove er code likhbi(tawhid)
+                            }
+                        });
+
+                    document
+                        .getElementById("inviteListLi")
+                        .appendChild(inviteListSingleLi);
+                }
+            });
+        }
+    }
 };
 
 prevContainer.addEventListener("click", (e) => {

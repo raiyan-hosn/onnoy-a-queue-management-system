@@ -59,7 +59,6 @@ const myfunction = (params, calledFrom) => {
         qid,
         email,
         owner,
-        access,
         title,
         time,
         inviteList,
@@ -152,7 +151,6 @@ const myfunction = (params, calledFrom) => {
                             if (e.target.classList[0] === "removeFromCounter") {
                               
                                 // Eikhane counter list theke remove er code likhbi(tawhid)
-                                deleteFromCounter(email,qid);
                             }
                         });
                 }
@@ -167,12 +165,12 @@ const myfunction = (params, calledFrom) => {
     } else {
         let deskListKeys = Object.keys(deskList);
         for (const e of deskListKeys) {
-            console.log(deskList[e].email);
+           
             let email = deskList[e].email;
             email = filterPath(email);
             usersRef.child(email).once("value", function (snapshot) {
                 if (snapshot != null) {
-                    console.log(snapshot.val().name);
+                   
                     let deskListSingleLi = document.createElement("li");
                     deskListSingleLi.classList.add("bg-white");
                     deskListSingleLi.classList.add("mx-2");
@@ -194,9 +192,8 @@ const myfunction = (params, calledFrom) => {
                         .getElementById("deskListLi")
                         .addEventListener("click", (e) => {
                             if (e.target.classList[0] === "removeFromDesk") {
-                                console.log(qid, email);
+                              
                                 // Eikhane desk list theke remove er code likhbi(tawhid)
-                                deleteFromDesk(email,qid);
                             }
                         });
 
@@ -219,7 +216,7 @@ const myfunction = (params, calledFrom) => {
             email = filterPath(email);
             usersRef.child(email).once("value", function (snapshot) {
                 if (snapshot != null) {
-                  
+                   
                     let inviteListSingleLi = document.createElement("li");
                     inviteListSingleLi.classList.add("bg-white");
                     inviteListSingleLi.classList.add("mx-2");
@@ -240,7 +237,7 @@ const myfunction = (params, calledFrom) => {
                         .getElementById("inviteListLi")
                         .addEventListener("click", (e) => {
                             if (e.target.classList[0] === "removeFromInvite") {
-                             
+                                console.log("clicked rm invite");
                                 // Eikhane desk list theke remove er code likhbi(tawhid)
                                 deleteFromInviteLists(email,qid);
                             }

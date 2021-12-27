@@ -86,7 +86,7 @@ const myfunction = (params, calledFrom) => {
             const li = `<li>${e}</li>`;
             invitedListLi = invitedListLi + li;
         }
-    }
+    }anti
 
     prevContainer.innerHTML = `
         <div class="row">

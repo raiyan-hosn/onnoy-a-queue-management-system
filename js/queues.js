@@ -46,6 +46,19 @@ function createQueue(newQueue) {
 function addToInviteList(email,qid,access){
 
 }
+function addToInvite(email,qid,access){
+    email=filterPath(email);
+    // add to qid parent
+    queuesRef.child(qid+"/inviteList").update({
+        [email]: access
+    });
+
+    //add to user parent
+    usersRef.child(email + "/inviteList").update({
+        [qid]: access,
+    });
+    
+}
 function addToPrevious(email, qid, access) {
     email = filterPath(email);
     usersRef.child(email + "/previousList").update({

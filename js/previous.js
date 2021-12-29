@@ -68,6 +68,7 @@ const myfunction = (params, calledFrom) => {
     const {
         qid,
         email,
+        access,
         owner,
         title,
         time,
@@ -81,7 +82,7 @@ const myfunction = (params, calledFrom) => {
             <div class="col-sm-8">
                 <h4>Queue ID: <span class="text-danger">${qid}</span></h4>
                 <h4>Queue Title: <span class="text-capitalize">${title}</span></h4>
-                <h4>Access Type: ${owner}</h4>
+                <h4>Access Type: ${access}</h4>
             </div>
             <div class="col-sm-4">
                 eikhane queue er QR code boshaile valo lagbo
@@ -104,12 +105,12 @@ const myfunction = (params, calledFrom) => {
             </div>
             <div class="col-sm-4">
                 <div class="input-group">
-					<input id="invitedEmailInput" type="Email" class="form-control" placeholder="Inviete Someone" aria-label="Recipient's username with two button addons">
-					<select id="invitedEmailType" class="form-select" aria-label="Default select example">
+					<input id="invitedEmailInputFromSD" type="Email" class="form-control" placeholder="Inviete Someone" aria-label="Recipient's username with two button addons">
+					<select id="invitedEmailTypeFromSD" class="form-select" aria-label="Default select example">
 						<option value="Desk">Desk</option>
 						<option value="Counter">Counter</option>
 					</select>
-					<button id="invitedEmailButton" class="btn" type="button"><i class="fas fa-plus"></i></button>
+					<button id="invitedEmailButtonFromSD" class="btn" type="button"><i class="fas fa-plus"></i></button>
 				</div>
                 <div class="p-3 bg-light rounded-3">
                     <h4 class="text-center">invited list</h4>
@@ -138,7 +139,7 @@ const myfunction = (params, calledFrom) => {
                     counterListSingleLi.classList.add("mx-2");
                     counterListSingleLi.classList.add("rounded");
                     counterListSingleLi.innerHTML = `
-                    <div class="row align-items-center">
+                    <div class="row bg-white my-2 align-items-center">
                         <div class="col-9">
                             <div>Name: ${snapshot.val().name}</div>
                             <div>Email: ${antiFilterPath(email)}</div>
@@ -181,7 +182,7 @@ const myfunction = (params, calledFrom) => {
                     deskListSingleLi.classList.add("mx-2");
                     deskListSingleLi.classList.add("rounded");
                     deskListSingleLi.innerHTML = `
-                    <div class="row align-items-center">
+                    <div class="row bg-white my-2 align-items-center">
                         <div class="col-9">
                             <div>Name: ${snapshot.val().name}</div>
                             <div>Email: ${antiFilterPath(email)}</div>
@@ -225,13 +226,13 @@ const myfunction = (params, calledFrom) => {
                     inviteListSingleLi.classList.add("mx-2");
                     inviteListSingleLi.classList.add("rounded");
                     inviteListSingleLi.innerHTML = `
-                    <div class="row align-items-center">
+                    <div class="row bg-white my-2 align-items-center">
                         <div class="col-9">
                             <div>Name: ${snapshot.val().name}</div>
                             <div>Email: ${antiFilterPath(email)}</div>
                         </div>
                         <div class="col-3">
-                            <button class="removeFromInvite"><i class="fas fa-user-minus"></i></button>
+                            <button id="${email}" class="removeFromInvite"><i class="fas fa-user-minus"></i></button>
                         </div>
                     </div>
                     `;
@@ -239,10 +240,10 @@ const myfunction = (params, calledFrom) => {
                     document
                         .getElementById("inviteListLi")
                         .addEventListener("click", (e) => {
-                            if (e.target.classList[0] === "removeFromInvite") {
-                                console.log("clicked rm invite");
-                                // Eikhane desk list theke remove er code likhbi(tawhid)
-                                deleteFromInviteLists(email, qid);
+                            if (e.target.tagName === "BUTTON") {
+                                deleteFromInviteLists(e.target.id, qid);
+                                console.log(e.target.id);
+                                e.stopImmediatePropagation();
                             }
                         });
 
@@ -259,6 +260,25 @@ const myfunction = (params, calledFrom) => {
         prevContainer.classList.add("row");
         prevContainer.classList.remove("d-block");
     });
+
+    document
+        .getElementById("invitedEmailButtonFromSD")
+        .addEventListener("click", () => {
+            const newInvitedEmailFromSD = document.getElementById(
+                "invitedEmailInputFromSD"
+            ).value;
+            const newInvitedEmailTypeFromSD = document.getElementById(
+                "invitedEmailTypeFromSD"
+            ).value;
+
+            if (newInvitedEmailFromSD.length !== 0) {
+                addToInvite(
+                    newInvitedEmailFromSD,
+                    qid,
+                    newInvitedEmailTypeFromSD
+                );
+            }
+        });
 };
 
 prevContainer.addEventListener("click", (e) => {

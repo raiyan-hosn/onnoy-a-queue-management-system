@@ -318,7 +318,7 @@ function seeDetails(qid, calledFrom) {
                 let counterList = snapshot.val().counterList;
                 let deskList = snapshot.val().deskList;
                 let access;
-
+                owner=filterPath(owner);
                 let flag;
                 if (counterList != null || counterList != undefined) {
                     let arr = Object.keys(counterList);

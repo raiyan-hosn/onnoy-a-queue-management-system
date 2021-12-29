@@ -1,4 +1,5 @@
 var usersRef = firebase.database().ref("users");
+
 function signInWithGoogle() {
 	if (!firebase.auth().currentUser) {
 		var provider = new firebase.auth.GoogleAuthProvider();
@@ -57,15 +58,14 @@ function antiFilterPath(str) {
 }
 
 
-function getUserEmail() {
-	if(firebase.auth()==null|| firebase.auth().currentUser==null){
-		return "no email";
-	}
-	var email = firebase.auth().currentUser.email;
-	return email;
-}
-function getUserName() {
-	return firebase.auth().currentUser.displayName;
+
+function getUserName(email) {
+	email=filterPath(email);
+	usersRef.child(email).once("value",function(snapshot){
+		if(snapshot!=null){
+			console.log(snapshot.val().name);
+		}
+	});
 }
 function getUserPhotoURL(email) {
 	email = filterPath(email);

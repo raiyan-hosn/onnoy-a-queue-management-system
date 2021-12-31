@@ -265,3 +265,8 @@ label #sb-cancel {
 .removeFromInvite i {
     pointer-events: none;
 }
+
+#queueDeleteButton {
+    background-color: #e74c3c;
+    color: #fff;
+}

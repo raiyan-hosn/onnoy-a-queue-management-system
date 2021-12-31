@@ -120,7 +120,14 @@ const myfunction = (params, calledFrom) => {
             </div>
         </div>
 
-        <div class="my-4 text-center"><button id="loadAllPrevious" class="button fw-bold">Privious</button></div>
+        <div class="d-block">
+            <div class="d-flex justify-content-center my-5">
+                <button id="loadAllPrevious" class="button fw-bold">All Privious</button>
+
+                <button id="queueDeleteButton" class="button">Delete This Queue</button>
+            </div>
+        </div>
+        
     `;
 
     if (counterList === undefined || counterList === null) {
@@ -129,6 +136,8 @@ const myfunction = (params, calledFrom) => {
         `;
     } else {
         let counterListKeys = Object.keys(counterList);
+        const counterListLi = document.getElementById("counterListLi");
+        counterListLi.innerHTML = "";
         for (const e of counterListKeys) {
             let email = counterList[e].email;
             email = filterPath(email);
@@ -146,21 +155,22 @@ const myfunction = (params, calledFrom) => {
                             <div>Counter No: ${e}</div>
                         </div>
                         <div class="col-3">
-                            <button class="removeFromCounter"><i class="fas fa-user-minus"></i></button>
+                            <button id="${email}" class="removeFromCounter"><i class="fas fa-user-minus"></i></button>
                         </div>
                     </div>
                     `;
 
                     document
                         .getElementById("counterListLi")
-                        .appendChild(counterListSingleLi);
-                    document
-                        .getElementById("counterListLi")
                         .addEventListener("click", (e) => {
-                            if (e.target.classList[0] === "removeFromCounter") {
-                                // Eikhane counter list theke remove er code likhbi(tawhid)
+                            if (e.target.tagName === "BUTTON") {
+                                deleteFromCounter(e.target.id, qid);
+                                console.log(e.target.id);
+                                e.stopImmediatePropagation();
                             }
                         });
+
+                    counterListLi.appendChild(counterListSingleLi);
                 }
             });
         }
@@ -172,6 +182,9 @@ const myfunction = (params, calledFrom) => {
         `;
     } else {
         let deskListKeys = Object.keys(deskList);
+        const deskListLi = document.getElementById("deskListLi");
+        deskListLi.innerHTML = "";
+
         for (const e of deskListKeys) {
             let email = deskList[e].email;
             email = filterPath(email);
@@ -189,7 +202,7 @@ const myfunction = (params, calledFrom) => {
                             <div>Desk No: ${e}</div>
                         </div>
                         <div class="col-3">
-                            <button class="removeFromDesk"><i class="fas fa-user-minus"></i></button>
+                            <button id="${email}" class="removeFromDesk"><i class="fas fa-user-minus"></i></button>
                         </div>
                     </div>
                     `;
@@ -197,14 +210,15 @@ const myfunction = (params, calledFrom) => {
                     document
                         .getElementById("deskListLi")
                         .addEventListener("click", (e) => {
-                            if (e.target.classList[0] === "removeFromDesk") {
-                                // Eikhane desk list theke remove er code likhbi(tawhid)
+                            if (e.target.tagName === "BUTTON") {
+                                deleteFromDesk(e.target.id, qid);
+                                e.stopImmediatePropagation();
                             }
                         });
 
-                    document
-                        .getElementById("deskListLi")
-                        .appendChild(deskListSingleLi);
+                    console.log(deskListSingleLi);
+
+                    deskListLi.appendChild(deskListSingleLi);
                 }
             });
         }
@@ -216,6 +230,8 @@ const myfunction = (params, calledFrom) => {
         `;
     } else {
         let inviteListKeys = Object.keys(inviteList);
+        const inviteListLi = document.getElementById("inviteListLi");
+        inviteListLi.innerHTML = "";
         for (const e of inviteListKeys) {
             let email = e;
             email = filterPath(email);
@@ -230,6 +246,7 @@ const myfunction = (params, calledFrom) => {
                         <div class="col-9">
                             <div>Name: ${snapshot.val().name}</div>
                             <div>Email: ${antiFilterPath(email)}</div>
+                            <div>Access: rayhan dibi</div>
                         </div>
                         <div class="col-3">
                             <button id="${email}" class="removeFromInvite"><i class="fas fa-user-minus"></i></button>
@@ -247,9 +264,7 @@ const myfunction = (params, calledFrom) => {
                             }
                         });
 
-                    document
-                        .getElementById("inviteListLi")
-                        .appendChild(inviteListSingleLi);
+                    inviteListLi.appendChild(inviteListSingleLi);
                 }
             });
         }
@@ -278,6 +293,12 @@ const myfunction = (params, calledFrom) => {
                     newInvitedEmailTypeFromSD
                 );
             }
+        });
+
+    document
+        .getElementById("queueDeleteButton")
+        .addEventListener("click", () => {
+            console.log(qid);
         });
 };
 

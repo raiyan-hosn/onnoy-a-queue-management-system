@@ -17,9 +17,11 @@ const allPreviousLoader = () => {
                 .on("value", function (snapshot) {
                     if (snapshot.val() == null) {
                         //not found
+                        prevContainer.innerHTML = "";
                     } else {
                         let qidList = Object.keys(snapshot.val());
                         let prevQueue = "";
+                        prevContainer.innerHTML = "";
                         for (
                             let i = 0;
                             i < Object.keys(snapshot.val()).length;
@@ -77,58 +79,100 @@ const myfunction = (params, calledFrom) => {
         deskList,
     } = params;
 
-    prevContainer.innerHTML = `
-        <div class="row">
-            <div class="col-sm-8">
-                <h4>Queue ID: <span class="text-danger">${qid}</span></h4>
-                <h4>Queue Title: <span class="text-capitalize">${title}</span></h4>
-                <h4>Access Type: ${access}</h4>
-            </div>
-            <div class="col-sm-4">
-                eikhane queue er QR code boshaile valo lagbo
-            </div>
-        </div>
-        <div class="row gx-3 mt-4">
-            <div class="col-sm-4">
-                <div class="p-3 bg-light rounded-3">
-                    <h4 class="text-center">Counter</h4>
-                    <ul id="counterListLi">
-                    </ul>
+    if (access === "Owner") {
+        prevContainer.innerHTML = `
+            <div class="row">
+                <div class="col-sm-8">
+                    <h4>Queue ID: <span class="text-danger">${qid}</span></h4>
+                    <h4>Queue Title: <span class="text-capitalize">${title}</span></h4>
+                    <h4>Access Type: ${access}</h4>
+                </div>
+                <div class="col-sm-4">
+                    eikhane queue er QR code boshaile valo lagbo
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="p-3 bg-light rounded-3">
-                    <h4 class="text-center">Desk</h4>
-                    <ul id="deskListLi">
-                    </ul>
+            <div class="row gx-3 mt-4">
+                <div class="col-sm-4">
+                    <div class="p-3 bg-light rounded-3">
+                        <h4 class="text-center">Counter</h4>
+                        <ul id="counterListLi">
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="p-3 bg-light rounded-3">
+                        <h4 class="text-center">Desk</h4>
+                        <ul id="deskListLi">
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input id="invitedEmailInputFromSD" type="Email" class="form-control" placeholder="Inviete Someone" aria-label="Recipient's username with two button addons">
+                        <select id="invitedEmailTypeFromSD" class="form-select" aria-label="Default select example">
+                            <option value="Desk">Desk</option>
+                            <option value="Counter">Counter</option>
+                        </select>
+                        <button id="invitedEmailButtonFromSD" class="btn" type="button"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div class="p-3 bg-light rounded-3">
+                        <h4 class="text-center">invited list</h4>
+                        <ul id="inviteListLi">
+                        </ul>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-4">
-                <div class="input-group">
-					<input id="invitedEmailInputFromSD" type="Email" class="form-control" placeholder="Inviete Someone" aria-label="Recipient's username with two button addons">
-					<select id="invitedEmailTypeFromSD" class="form-select" aria-label="Default select example">
-						<option value="Desk">Desk</option>
-						<option value="Counter">Counter</option>
-					</select>
-					<button id="invitedEmailButtonFromSD" class="btn" type="button"><i class="fas fa-plus"></i></button>
-				</div>
-                <div class="p-3 bg-light rounded-3">
-                    <h4 class="text-center">invited list</h4>
-                    <ul id="inviteListLi">
-                    </ul>
-                </div>
-            </div>
-        </div>
 
-        <div class="d-block">
-            <div class="d-flex justify-content-center my-5">
-                <button id="loadAllPrevious" class="button fw-bold">All Privious</button>
-
-                <button id="queueDeleteButton" class="button">Delete This Queue</button>
+            <div class="d-block">
+                <div class="d-flex justify-content-center my-5">
+                    <button id="loadAllPrevious" class="button fw-bold">All Privious</button>
+                    <button id="queueDeleteButton" class="button">Delete This Queue</button>
+                </div>
             </div>
-        </div>
-        
-    `;
+        `;
+    } else {
+        prevContainer.innerHTML = `
+            <div class="row">
+                <div class="col-sm-8">
+                    <h4>Queue ID: <span class="text-danger">${qid}</span></h4>
+                    <h4>Queue Title: <span class="text-capitalize">${title}</span></h4>
+                    <h4>Access Type: ${access}</h4>
+                </div>
+                <div class="col-sm-4">
+                    eikhane queue er QR code boshaile valo lagbo
+                </div>
+            </div>
+            <div class="row gx-3 mt-4">
+                <div class="col-sm-4">
+                    <div class="p-3 bg-light rounded-3">
+                        <h4 class="text-center">Counter</h4>
+                        <ul id="counterListLi">
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="p-3 bg-light rounded-3">
+                        <h4 class="text-center">Desk</h4>
+                        <ul id="deskListLi">
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="p-3 bg-light rounded-3">
+                        <h4 class="text-center">invited list</h4>
+                        <ul id="inviteListLi">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-block">
+                <div class="d-flex justify-content-center my-5">
+                    <button id="loadAllPrevious" class="button fw-bold">All Privious</button>
+                </div>
+            </div>
+        `;
+    }
 
     if (counterList === undefined || counterList === null) {
         document.getElementById("counterListLi").innerHTML = `
@@ -147,18 +191,31 @@ const myfunction = (params, calledFrom) => {
                     counterListSingleLi.classList.add("bg-white");
                     counterListSingleLi.classList.add("mx-2");
                     counterListSingleLi.classList.add("rounded");
-                    counterListSingleLi.innerHTML = `
-                    <div class="row bg-white my-2 align-items-center">
-                        <div class="col-9">
-                            <div>Name: ${snapshot.val().name}</div>
-                            <div>Email: ${antiFilterPath(email)}</div>
-                            <div>Counter No: ${e}</div>
+
+                    if (access === "Owner") {
+                        counterListSingleLi.innerHTML = `
+                        <div class="row bg-white my-2 align-items-center">
+                            <div class="col-9">
+                                <div>Name: ${snapshot.val().name}</div>
+                                <div>Email: ${antiFilterPath(email)}</div>
+                                <div>Counter No: ${e}</div>
+                            </div>
+                            <div class="col-3">
+                                <button id="${email}" class="removeFromCounter"><i class="fas fa-user-minus"></i></button>
+                            </div>
                         </div>
-                        <div class="col-3">
-                            <button id="${email}" class="removeFromCounter"><i class="fas fa-user-minus"></i></button>
+                        `;
+                    } else {
+                        counterListSingleLi.innerHTML = `
+                        <div class="row bg-white my-2 align-items-center">
+                            <div class="col-9">
+                                <div>Name: ${snapshot.val().name}</div>
+                                <div>Email: ${antiFilterPath(email)}</div>
+                                <div>Counter No: ${e}</div>
+                            </div>
                         </div>
-                    </div>
-                    `;
+                        `;
+                    }
 
                     document
                         .getElementById("counterListLi")
@@ -194,18 +251,31 @@ const myfunction = (params, calledFrom) => {
                     deskListSingleLi.classList.add("bg-white");
                     deskListSingleLi.classList.add("mx-2");
                     deskListSingleLi.classList.add("rounded");
-                    deskListSingleLi.innerHTML = `
-                    <div class="row bg-white my-2 align-items-center">
-                        <div class="col-9">
-                            <div>Name: ${snapshot.val().name}</div>
-                            <div>Email: ${antiFilterPath(email)}</div>
-                            <div>Desk No: ${e}</div>
+
+                    if (access === "Owner") {
+                        deskListSingleLi.innerHTML = `
+                        <div class="row bg-white my-2 align-items-center">
+                            <div class="col-9">
+                                <div>Name: ${snapshot.val().name}</div>
+                                <div>Email: ${antiFilterPath(email)}</div>
+                                <div>Desk No: ${e}</div>
+                            </div>
+                            <div class="col-3">
+                                <button id="${email}" class="removeFromDesk"><i class="fas fa-user-minus"></i></button>
+                            </div>
                         </div>
-                        <div class="col-3">
-                            <button id="${email}" class="removeFromDesk"><i class="fas fa-user-minus"></i></button>
+                        `;
+                    } else {
+                        deskListSingleLi.innerHTML = `
+                        <div class="row bg-white my-2 align-items-center">
+                            <div class="col-12">
+                                <div>Name: ${snapshot.val().name}</div>
+                                <div>Email: ${antiFilterPath(email)}</div>
+                                <div>Desk No: ${e}</div>
+                            </div>
                         </div>
-                    </div>
-                    `;
+                        `;
+                    }
 
                     document
                         .getElementById("deskListLi")
@@ -215,8 +285,6 @@ const myfunction = (params, calledFrom) => {
                                 e.stopImmediatePropagation();
                             }
                         });
-
-                    console.log(deskListSingleLi);
 
                     deskListLi.appendChild(deskListSingleLi);
                 }
@@ -241,18 +309,30 @@ const myfunction = (params, calledFrom) => {
                     inviteListSingleLi.classList.add("bg-white");
                     inviteListSingleLi.classList.add("mx-2");
                     inviteListSingleLi.classList.add("rounded");
-                    inviteListSingleLi.innerHTML = `
-                    <div class="row bg-white my-2 align-items-center">
-                        <div class="col-9">
-                            <div>Name: ${snapshot.val().name}</div>
-                            <div>Email: ${antiFilterPath(email)}</div>
-                            <div>Access: rayhan dibi</div>
+                    if (access === "Owner") {
+                        inviteListSingleLi.innerHTML = `
+                        <div class="row bg-white my-2 align-items-center">
+                            <div class="col-9">
+                                <div>Name: ${snapshot.val().name}</div>
+                                <div>Email: ${antiFilterPath(email)}</div>
+                                <div>Access: rayhan dibi</div>
+                            </div>
+                            <div class="col-3">
+                                <button id="${email}" class="removeFromInvite"><i class="fas fa-user-minus"></i></button>
+                            </div>
                         </div>
-                        <div class="col-3">
-                            <button id="${email}" class="removeFromInvite"><i class="fas fa-user-minus"></i></button>
+                        `;
+                    } else {
+                        inviteListSingleLi.innerHTML = `
+                        <div class="row bg-white my-2 align-items-center">
+                            <div class="col-12">
+                                <div>Name: ${snapshot.val().name}</div>
+                                <div>Email: ${antiFilterPath(email)}</div>
+                                <div>Access: rayhan dibi</div>
+                            </div>
                         </div>
-                    </div>
-                    `;
+                        `;
+                    }
 
                     document
                         .getElementById("inviteListLi")

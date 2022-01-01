@@ -310,13 +310,14 @@ const myfunction = (params) => {
                     inviteListSingleLi.classList.add("bg-white");
                     inviteListSingleLi.classList.add("mx-2");
                     inviteListSingleLi.classList.add("rounded");
+                    let personAccess=snapshot.val().inviteList[qid];
                     if (access === "Owner") {
                         inviteListSingleLi.innerHTML = `
                         <div class="row bg-white my-2 align-items-center">
                             <div class="col-9">
                                 <div>Name: ${snapshot.val().name}</div>
                                 <div>Email: ${antiFilterPath(email)}</div>
-                                <div>Access: rayhan dibi</div>
+                                <div>Access: ${personAccess}</div>
                             </div>
                             <div class="col-3">
                                 <button id="${email}" class="removeFromInvite"><i class="fas fa-user-minus"></i></button>
@@ -329,7 +330,7 @@ const myfunction = (params) => {
                             <div class="col-12">
                                 <div>Name: ${snapshot.val().name}</div>
                                 <div>Email: ${antiFilterPath(email)}</div>
-                                <div>Access: rayhan dibi</div>
+                                <div>Access: ${personAccess}</div>
                             </div>
                         </div>
                         `;

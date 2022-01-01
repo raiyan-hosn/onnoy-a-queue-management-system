@@ -45,7 +45,7 @@ function generateProfileNavs() {
         if (snapshot.val() == null) {
           console.log("No photo found for email: " + antiFilterPath(email));
         } else {
-          let userName = getUserName();
+          let userName = user.displayName;
           const largeImg = document.createElement("img");
           largeImg.src = snapshot.val().photoURL;
           // console.log(largeImg);

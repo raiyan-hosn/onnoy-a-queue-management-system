@@ -378,7 +378,7 @@ const myfunction = (params, calledFrom) => {
     document
         .getElementById("queueDeleteButton")
         .addEventListener("click", () => {
-            console.log(qid);
+            deleteQueue(qid);
         });
 };
 

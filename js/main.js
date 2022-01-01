@@ -3,22 +3,31 @@ mainQueue.classList.add("container");
 mainQueue.classList.add("main-queue");
 
 const mainUi = (param) => {
-
-
-    let { qid, inviteList, owner, tittle, time, type, counterList, deskList, waitingList, serviceList, notice } = param;
-    if(serviceList==null){
-        serviceList= {
-            "0":{
-                "name": "None is in service",
-                "counter": "0"
+    let {
+        qid,
+        inviteList,
+        owner,
+        tittle,
+        time,
+        type,
+        counterList,
+        deskList,
+        waitingList,
+        serviceList,
+        notice,
+    } = param;
+    if (serviceList == null) {
+        serviceList = {
+            0: {
+                name: "None is in service",
+                counter: "0",
             },
-          
-        }
+        };
     }
-    if(waitingList==null){
-        waitingList={
-            "0": "None is waiting"
-        }
+    if (waitingList == null) {
+        waitingList = {
+            0: "None is waiting",
+        };
     }
 
     mainQueue.innerHTML = `
@@ -43,6 +52,9 @@ const mainUi = (param) => {
                                     <div class="this-queue-info col-8">
                                         <h5 id="queue-title"></h5>
                                         <h4 id="queue-id-ui" class="fw-bolder text-secondary"></h4>
+                                        <div class="text-center">
+                                            <div id="live-time"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -64,10 +76,15 @@ const mainUi = (param) => {
                 </div>
             </div>
         </div>
-        <div class="text-center">
-            <div id="live-time" class="display-3">Time Is</div>
+        <div class="notice-area bg-warning">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-12 position-relative">
+                    <marquee id="notice-board" class="fw-bolder p-2 display-4">Notice: ${notice}</marquee>
+                    <div id="edit-notice" class="edit-notice"></div>
+                </div>
+            </div>
         </div>
-        <marquee id="notice-board" class="bg-warning fw-bolder rounded p-2 display-4">${notice}</marquee>
+        
 
         <!-- Modal addPeopleModa-->
         <div class="modal fade" id="addPeopleBtnModal" tabindex="-1" role="dialog" aria-labelledby="addPeopleBtnModalTitle" aria-hidden="true">
@@ -110,24 +127,27 @@ const mainUi = (param) => {
         </div>
     `;
 
-    let liveTime = document.getElementById('live-time');
+    let liveTime = document.getElementById("live-time");
 
     function getLiveTime() {
-    let d = new Date();
-    let s = d.getSeconds();
-    let m = d.getMinutes();
-    let h = d.getHours();
-    liveTime.textContent = 
-        ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
+        let d = new Date();
+        let s = d.getSeconds();
+        let m = d.getMinutes();
+        let h = d.getHours();
+        liveTime.textContent =
+            ("0" + h).substr(-2) +
+            ":" +
+            ("0" + m).substr(-2) +
+            ":" +
+            ("0" + s).substr(-2);
     }
 
     setInterval(getLiveTime, 1000);
 
-
-    // queue title in ui 
+    // queue title in ui
     const queueTitle = document.getElementById("queue-title");
-    queueTitle.innerText = `${tittle}`
-    // queue id in ui 
+    queueTitle.innerText = `${tittle}`;
+    // queue id in ui
     const queueIdUi = document.getElementById("queue-id-ui");
     queueIdUi.innerText = `${qid}`;
 
@@ -135,7 +155,7 @@ const mainUi = (param) => {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             // User is signed in.
-            
+
             qidRef = queuesRef.child(qid);
             email = filterPath(user.email);
             qidRef.child("owner").once("value", function (snapshot) {
@@ -145,68 +165,62 @@ const mainUi = (param) => {
                     editNotice.innerHTML = `<button id="editNoticeBtn" data-toggle="modal" data-target="#notice" type="button"><i class="fas fa-edit"></i></button>`;
                     editNotice.addEventListener("click", () => {
                         // Edit notice Btn works ....
-                       
-                        const newNoticeAdd = document.getElementById("newNoticeAdd");
+
+                        const newNoticeAdd =
+                            document.getElementById("newNoticeAdd");
                         newNoticeAdd.addEventListener("click", () => {
-                            const newNoticeInput = document.getElementById("newNoticeInput");
+                            const newNoticeInput =
+                                document.getElementById("newNoticeInput");
                             if (newNoticeInput.value !== "") {
                                 console.log(newNoticeInput.value);
-                                updateNoticeBoard(qid,newNoticeInput.value)
+                                updateNoticeBoard(qid, newNoticeInput.value);
                                 newNoticeInput.value = "";
                             }
                         });
                     });
-                
-                }
-                else {
+                } else {
                     //return false
                 }
             });
-         
-        
-
         } else {
             // No user is signed in.
         }
     });
-  
+
     ////////////////
 
     const callPeopleBtn = document.getElementById("callPeopleBtn");
     const addWaitingPeople = document.getElementById("add-waiting-member");
 
-  
-    firebase.auth().onAuthStateChanged(function(user) {
-		if (user) {
-		  
-
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
             qidRef = queuesRef.child(qid);
             email = filterPath(user.email);
-            
+
             qidRef.child("deskList").once("value", function (snapshot) {
-                if(snapshot.val()==null){
+                if (snapshot.val() == null) {
                     return;
                 }
                 keys = Object.keys(snapshot.val());
                 flag = false;
                 for (let i = 0; i < keys.length; i++) {
-                    if (snapshot.val()[keys[i]]['email'] == email) {
+                    if (snapshot.val()[keys[i]]["email"] == email) {
                         flag = true;
                         break;
-                    }
-                    else {
+                    } else {
                         //console.log(snapshot.val()[keys[i]]['email']);
                     }
                 }
                 if (flag) {
-    
                     addWaitingPeople.addEventListener("click", () => {
                         console.log("add people button clicked");
-    
+
                         /// get new people works...
-                        const newPeopleAdd = document.getElementById("newPeopleAdd");
+                        const newPeopleAdd =
+                            document.getElementById("newPeopleAdd");
                         newPeopleAdd.addEventListener("click", () => {
-                            const newPeopleInput = document.getElementById("newPeopleInput");
+                            const newPeopleInput =
+                                document.getElementById("newPeopleInput");
                             if (newPeopleInput.value !== "") {
                                 console.log(qid, newPeopleInput.value);
                                 addPeople(qid, newPeopleInput.value);
@@ -215,52 +229,45 @@ const mainUi = (param) => {
                         });
                     });
                     addWaitingPeople.innerHTML = `<button data-toggle="modal" data-target="#addPeopleBtnModal" type="button" id="addPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
-                }
-                else {
+                } else {
                     //return false
                 }
             });
-    
+
             qidRef.child("counterList").once("value", function (snapshot) {
-                if(snapshot.val()==null){
+                if (snapshot.val() == null) {
                     return;
                 }
                 keys = Object.keys(snapshot.val());
                 flag = false;
-                myCounterNumber="";
+                myCounterNumber = "";
                 for (let i = 0; i < keys.length; i++) {
-                    if (snapshot.val()[keys[i]]['email'] == email) {
+                    if (snapshot.val()[keys[i]]["email"] == email) {
                         flag = true;
-                        myCounterNumber=keys[i];
+                        myCounterNumber = keys[i];
                         break;
-                    }
-                    else {
+                    } else {
                         //console.log(snapshot.val()[keys[i]]['email']);
                     }
                 }
                 if (flag) {
-    
                     callPeopleBtn.addEventListener("click", () => {
                         console.log("call people button clicked");
-                        if(myCounterNumber!=""){
-                            callPeople(qid,myCounterNumber);
+                        if (myCounterNumber != "") {
+                            callPeople(qid, myCounterNumber);
                         }
-    
                     });
                     callPeopleBtn.innerHTML = `<button id="callPeopleBtn"><i class="fas fa-user-plus"></i></button>`;
-                }
-                else {
+                } else {
                     //return false
                 }
             });
-    
+        } else {
+            // No user is signed in.
+        }
+    });
 
-		} else {
-		  // No user is signed in.
-		}
-	  });
- 
-    // in service member list ui rendering code ... 
+    // in service member list ui rendering code ...
 
     const inServicePeople = document.getElementById("in-service-members");
     const serialNo = document.getElementById("serial-no");
@@ -268,18 +275,19 @@ const mainUi = (param) => {
 
     const arrInServicePeople = Object.keys(serviceList);
     serialNo.innerText = `${arrInServicePeople[arrInServicePeople.length - 1]}`;
-    
-    counterNo.innerText = `counter no: ${serviceList[arrInServicePeople[arrInServicePeople.length-1]]["counter"]}`;
-    
+
+    counterNo.innerText = `counter no: ${
+        serviceList[arrInServicePeople[arrInServicePeople.length - 1]][
+            "counter"
+        ]
+    }`;
+
     for (let i = arrInServicePeople.length - 1; i >= 0; i--) {
         const { name, counter } = serviceList[arrInServicePeople[i]];
         const singleInServiceMember = document.createElement("h4");
         singleInServiceMember.innerText = `${arrInServicePeople[i]} - ${name} / C - ${counter}`;
         inServicePeople.appendChild(singleInServiceMember);
     }
-
-
-
 
     // waiting member list ui rendering code...
 
@@ -292,10 +300,6 @@ const mainUi = (param) => {
 
     const newPeopleAdd = document.getElementById("newPeopleAdd");
     // console.log(newPeopleAdd);
-
-
-
-
 };
 
 // join queue btn handler

@@ -1,12 +1,11 @@
 var queuesRef = firebase.database().ref("queues");
 function createQueue(newQueue) {
-
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             // User is signed in.
             let email = user.email;
             let qid = createKey();
-            queueIdShow(qid);
+
             let tittle = newQueue.queueTitle;
             let time = newQueue.queueDate;
             let type = newQueue.queueDeskType;
@@ -39,33 +38,28 @@ function createQueue(newQueue) {
                 lastSL: lastSL,
             });
             addToPrevious(owner, qid, "owner");
+            queueIdShow(qid);
         }
     });
-
 }
-function addToInviteList(email, qid, access) {
-
-}
+function addToInviteList(email, qid, access) {}
 function addToInvite(email, qid, access) {
     email = filterPath(email);
     usersRef.child(email).once("value", function (snapshot) {
         if (snapshot.val() == null) {
             return;
-        }
-        else {
+        } else {
             // add to qid parent
             queuesRef.child(qid + "/inviteList").update({
-                [email]: access
+                [email]: access,
             });
 
             //add to user parent
             usersRef.child(email + "/inviteList").update({
                 [qid]: access,
             });
-
         }
     });
-
 }
 function addToPrevious(email, qid, access) {
     email = filterPath(email);
@@ -161,40 +155,37 @@ function deleteFromDesk(email, qid) {
     //remove from userid previous
     usersRef.child(email + "/previousList/" + qid).remove();
 }
-function deleteQueue(qid){
-
+function deleteQueue(qid) {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            queuesRef.child(qid).once("value",function (snapshot){
-                if(snapshot.val!=null){
-                    let inviteList=snapshot.val().inviteList;
-                    let counterList=snapshot.val().counterList;
-                    let deskList= snapshot.val().deskList;
-                    let owner=snapshot.val().owner;
-                    if(owner!=filterPath(user.email))
-                        return;
-                    if(inviteList!=null){
-                        let arr=Object.keys(inviteList);
-                        for(let i=0;i<arr.length;i++){
-                            deleteFromInviteLists(arr[i],qid);
+            queuesRef.child(qid).once("value", function (snapshot) {
+                if (snapshot.val != null) {
+                    let inviteList = snapshot.val().inviteList;
+                    let counterList = snapshot.val().counterList;
+                    let deskList = snapshot.val().deskList;
+                    let owner = snapshot.val().owner;
+                    if (owner != filterPath(user.email)) return;
+                    if (inviteList != null) {
+                        let arr = Object.keys(inviteList);
+                        for (let i = 0; i < arr.length; i++) {
+                            deleteFromInviteLists(arr[i], qid);
                         }
                     }
-                    if(counterList!=null){
-
-                        let arr=Object.keys(counterList);
-                        for(let i=0;i<arr.length;i++){
-                            deleteFromCounter(counterList[arr[i]].email,qid);
+                    if (counterList != null) {
+                        let arr = Object.keys(counterList);
+                        for (let i = 0; i < arr.length; i++) {
+                            deleteFromCounter(counterList[arr[i]].email, qid);
                         }
                     }
-                    if(deskList!=null){
-
-                        let arr=Object.keys(deskList);
-                        for(let i=0;i<arr.length;i++){
-                            deleteFromDesk(deskList[arr[i]].email,qid);
+                    if (deskList != null) {
+                        let arr = Object.keys(deskList);
+                        for (let i = 0; i < arr.length; i++) {
+                            deleteFromDesk(deskList[arr[i]].email, qid);
                         }
                     }
                     //delete queue
                     queuesRef.child(qid).remove();
+                    allPreviousLoader();
                 }
             });
         }
@@ -351,7 +342,7 @@ function updateNoticeBoard(qid, notice) {
         notice: notice,
     });
 }
-function seeDetails(qid, calledFrom) {
+function seeDetails(qid) {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             let email = filterPath(user.email);
@@ -388,11 +379,9 @@ function seeDetails(qid, calledFrom) {
 
                 if (email == owner) {
                     access = "Owner";
-                }
-                else if (flag) {
+                } else if (flag) {
                     access = "Counter";
-                }
-                else {
+                } else {
                     access = "Desk";
                 }
                 let param = {
@@ -406,10 +395,8 @@ function seeDetails(qid, calledFrom) {
                     counterList,
                     deskList,
                 };
-                myfunction(param, calledFrom);
+                myfunction(param);
             });
         }
     });
 }
-
-

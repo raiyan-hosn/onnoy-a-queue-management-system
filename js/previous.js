@@ -63,7 +63,8 @@ const allPreviousLoader = () => {
     });
 };
 
-const myfunction = (params, calledFrom) => {
+const myfunction = (params) => {
+    console.log(params);
     prevContainer.innerHTML = "";
     prevContainer.classList.add("d-block");
     prevContainer.classList.remove("row");
@@ -385,7 +386,7 @@ const myfunction = (params, calledFrom) => {
 prevContainer.addEventListener("click", (e) => {
     if (e.target.tagName === "BUTTON") {
         if (e.target.name === "seeQueueDetails") {
-            seeDetails(e.target.id, "prev");
+            seeDetails(e.target.id);
         }
     }
 });

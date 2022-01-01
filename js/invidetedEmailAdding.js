@@ -97,12 +97,11 @@ const handleCreateQueue = () => {
     queueDate = "";
     queueDeskType = "desk-record";
     invitedEmails.splice(0, invitedEmails.length);
-
-    document.getElementById("create-container");
 };
 
 const queueIdShow = (qid) => {
     const createContqainer = document.getElementById("create-container");
+    createContqainer.classList.add("text-center");
     createContqainer.innerHTML = ``;
     createContqainer.innerHTML = `<h3>Your Queue ID is: ${qid}</h3>`;
 };

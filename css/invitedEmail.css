@@ -1,92 +1,50 @@
 #invitedEmailButton:hover {
-  padding: 8px 20px;
+    padding: 8px 20px;
 }
 
 #invited-eamil-area ul {
-  color: white;
-  list-style: none;
-  padding: 0;
+    color: white;
+    list-style: none;
+    padding: 0;
 }
 #invited-eamil-area ul li {
-  padding: 0;
+    padding: 0;
 }
 .invitedEmail-item-info {
-  background-color: #2b7a78;
-  padding: 8px 15px;
-  border-radius: 20px;
-  margin-right: 15px;
-  min-width: 300px;
-  text-align: left;
+    background-color: #2b7a78;
+    padding: 8px 15px;
+    border-radius: 20px;
+    margin-right: 15px;
+    min-width: 300px;
+    text-align: left;
 }
 
 .invitedEmail-item-info .invitedEmail-item-info-img img {
-  margin-right: 15px;
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
+    margin-right: 15px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
 }
 
 .invitedEmail-item-trash {
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  color: white;
-  font-size: 30px;
-  cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
 }
 .invitedEmail-item-trash div {
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  border-radius: 50%;
-  height: 60px;
-  width: 60px;
-  background-color: red;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    background-color: red;
 }
 .invitedEmail-item-trash i {
-  pointer-events: none;
+    pointer-events: none;
 }
-
-/* 
-
-previous works
-
-
- style for create - invitedEmailList 
-.invited-email-container {
-  max-width: 650px;
-}
-.invited-email-list .trash-btn {
-  background-color: #e74c3c;
-  cursor: pointer;
-  border: none;
-  padding: 5px;
-  height: 40px;
-  width: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.invited-email-list .trash-btn i {
-  font-size: 20px;
-  color: #fff;
-  pointer-events: none;
-}
-
-#invitedEmailButton {
-  font-weight: 400;
-  padding: 8px 20px;
-  background-color: var(--primary);
-  border: 2px solid transparent;
-  font-size: 1.5em;
-  transition: 0.5s;
-}
-#invitedEmailButton:hover {
-  border: 2px solid #171717;
-  background-color: #ffffff;
-  color: #171717;
-  font-weight: 700;
-}
- */

@@ -18,6 +18,13 @@ const allPreviousLoader = () => {
                     if (snapshot.val() == null) {
                         //not found
                         prevContainer.innerHTML = "";
+                        prevContainer.innerHTML = `
+                            <div class="col-12">
+                                <div class="text-center display-4 text-secondary">
+                                    You have no previous queue yet...
+                                </div>
+                            </div>
+                        `;
                     } else {
                         let qidList = Object.keys(snapshot.val());
                         let prevQueue = "";
@@ -58,7 +65,13 @@ const allPreviousLoader = () => {
                     }
                 });
         } else {
-            // No user is signed in.
+            prevContainer.innerHTML = "";
+            prevContainer.innerHTML = `
+            <div class="col-12 display-3 text-center text-secondary">
+                <div><i class="fas fa-exclamation-circle"></i></div>
+                <div><p>Please Login First</p></div>
+            </div>
+            `;
         }
     });
 };
@@ -89,7 +102,7 @@ const myfunction = (params) => {
                     <h4>Access Type: ${access}</h4>
                 </div>
                 <div class="col-sm-4">
-                    eikhane queue er QR code boshaile valo lagbo
+                    <canvas id="qrcode"></canvas>
                 </div>
             </div>
             <div class="row gx-3 mt-4">
@@ -140,7 +153,7 @@ const myfunction = (params) => {
                     <h4>Access Type: ${access}</h4>
                 </div>
                 <div class="col-sm-4">
-                    eikhane queue er QR code boshaile valo lagbo
+                    <canvas id="qrcode"></canvas>
                 </div>
             </div>
             <div class="row gx-3 mt-4">
@@ -174,6 +187,11 @@ const myfunction = (params) => {
             </div>
         `;
     }
+
+    new QRious({
+        element: document.getElementById("qrcode"),
+        value: qid,
+    });
 
     if (counterList === undefined || counterList === null) {
         document.getElementById("counterListLi").innerHTML = `
@@ -310,7 +328,7 @@ const myfunction = (params) => {
                     inviteListSingleLi.classList.add("bg-white");
                     inviteListSingleLi.classList.add("mx-2");
                     inviteListSingleLi.classList.add("rounded");
-                    let personAccess=snapshot.val().inviteList[qid];
+                    let personAccess = snapshot.val().inviteList[qid];
                     if (access === "Owner") {
                         inviteListSingleLi.innerHTML = `
                         <div class="row bg-white my-2 align-items-center">

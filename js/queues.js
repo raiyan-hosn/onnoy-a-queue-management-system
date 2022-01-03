@@ -155,6 +155,10 @@ function deleteFromDesk(email, qid) {
     //remove from userid previous
     usersRef.child(email + "/previousList/" + qid).remove();
 }
+function deleteFromPrevious(email,qid){
+    email=filterPath(email);
+    usersRef.child(email+"/previousList/"+qid).remove();
+}
 function deleteQueue(qid) {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
@@ -185,6 +189,8 @@ function deleteQueue(qid) {
                     }
                     //delete queue
                     queuesRef.child(qid).remove();
+                    //delete from previous
+                    deleteFromPrevious(filterPath(user.email),qid);
                     allPreviousLoader();
                 }
             });

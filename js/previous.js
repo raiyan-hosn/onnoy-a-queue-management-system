@@ -77,7 +77,7 @@ const allPreviousLoader = () => {
 };
 
 const myfunction = (params) => {
-    console.log(params);
+   
     prevContainer.innerHTML = "";
     prevContainer.classList.add("d-block");
     prevContainer.classList.remove("row");

@@ -5,7 +5,6 @@ firebase.auth().onAuthStateChanged(function (user) {
         let email = user.email;
         let name = user.displayName;
         let photoUrl = user.photoURL;
-        console.log(photoUrl);
         profileContainer.innerHTML = "";
         profileContainer.innerHTML = `
 		<div class="col-sm-6">

@@ -15,7 +15,7 @@ const allPreviousLoader = () => {
             usersRef
                 .child(email + "/previousList")
                 .on("value", function (snapshot) {
-                    if (snapshot.val() == null) {
+                    if (snapshot.val() == null || snapshot.val() == undefined) {
                         //not found
                         prevContainer.innerHTML = "";
                         prevContainer.innerHTML = `

@@ -47,12 +47,12 @@ const mainUi = (param) => {
                             <div class="queue-info my-5">
                                 <div class="row justify-content-center align-items-center">
                                     <div class="qr-code-image col-4">
-                                        <img src="https://img.freepik.com/free-vector/vector-qr-code-sample-isolated_255502-275.jpg?size=338&ext=jpg" alt="" />
+                                        <canvas id="qrcodeInMain"></canvas>
                                     </div>
                                     <div class="this-queue-info col-8">
                                         <h5 id="queue-title"></h5>
                                         <h4 id="queue-id-ui" class="fw-bolder text-secondary"></h4>
-                                        <div class="text-center">
+                                        <div class="text-start">
                                             <div id="live-time"></div>
                                         </div>
                                     </div>
@@ -126,6 +126,11 @@ const mainUi = (param) => {
             </div>
         </div>
     `;
+
+    new QRious({
+        element: document.getElementById("qrcodeInMain"),
+        value: qid,
+    });
 
     let liveTime = document.getElementById("live-time");
 

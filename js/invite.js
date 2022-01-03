@@ -10,7 +10,11 @@ firebase.auth().onAuthStateChanged(function (user) {
                 //not found
                 inviteContainer.innerHTML = "";
                 inviteContainer.innerHTML = `
-					<div class="col-12">No Invitation</div>
+					<div class="col-12">
+                        <div class="text-center display-4 text-secondary">
+                            You have no invitation yet...
+                        </div>
+                    </div>
 				`;
             } else {
                 let qidList = Object.keys(snapshot.val());
@@ -51,7 +55,13 @@ firebase.auth().onAuthStateChanged(function (user) {
             }
         });
     } else {
-        // No user is signed in.
+        inviteContainer.innerHTML = "";
+        inviteContainer.innerHTML = `
+        <div class="col-12 display-3 text-center text-secondary">
+            <div><i class="fas fa-exclamation-circle"></i></div>
+            <div><p>Please Login First</p></div>
+        </div>
+        `;
     }
 });
 

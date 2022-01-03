@@ -15,10 +15,13 @@ firebase.auth().onAuthStateChanged(function (user) {
 		</div>
 		<div class="col-sm-6">
 			<div class="text-sm-start text-xs-center mx-3">
-				<h5>Name: ${name}</h5>
-				<h5>Email: ${email}</h5>
+				<p>Name: <strong>${name}</strong></p>
+				<p>Email: <strong>${email}</strong></p>
+				<p class="mt-4 text-secondary">Your profile is synchronize with your google account</p>
 			</div>
 		</div>
+
+		
 		`;
     } else {
         profileContainer.innerHTML = "";

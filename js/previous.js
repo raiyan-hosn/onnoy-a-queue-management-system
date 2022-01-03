@@ -89,7 +89,7 @@ const myfunction = (params) => {
                     <h4>Access Type: ${access}</h4>
                 </div>
                 <div class="col-sm-4">
-                    eikhane queue er QR code boshaile valo lagbo
+                    <div id="qrcode"></div>
                 </div>
             </div>
             <div class="row gx-3 mt-4">
@@ -174,7 +174,6 @@ const myfunction = (params) => {
             </div>
         `;
     }
-
     if (counterList === undefined || counterList === null) {
         document.getElementById("counterListLi").innerHTML = `
             <li>Counter List is Empty</li>
@@ -310,7 +309,7 @@ const myfunction = (params) => {
                     inviteListSingleLi.classList.add("bg-white");
                     inviteListSingleLi.classList.add("mx-2");
                     inviteListSingleLi.classList.add("rounded");
-                    let personAccess=snapshot.val().inviteList[qid];
+                    let personAccess = snapshot.val().inviteList[qid];
                     if (access === "Owner") {
                         inviteListSingleLi.innerHTML = `
                         <div class="row bg-white my-2 align-items-center">

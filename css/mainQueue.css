@@ -1,0 +1,102 @@
+.counter-status {
+    background-color: #88d8b0;
+    border-radius: 20px;
+}
+.running-serial {
+    background-color: #fff;
+    border-radius: 15px;
+}
+.people-waitng {
+    background-color: #fe8a71;
+    border-radius: 20px;
+}
+
+.people-waitng h3 {
+    background-color: #f6cd61;
+    border-radius: 10px;
+}
+.people-waitng h4,
+.in-service-area h4 {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.serial-no {
+    font-size: 150px;
+    font-weight: 900;
+}
+
+.counter-no h2 {
+    color: #000;
+}
+
+.qr-code-image img {
+    width: 100%;
+    height: auto;
+}
+
+.in-service {
+    background-color: #ffeead;
+    border-radius: 10px;
+}
+
+.in-service-area {
+    background-color: #63ace5;
+    border-radius: 20px;
+}
+
+.notice-area {
+    border-radius: 20px;
+    min-height: 100px;
+}
+
+.notice-time {
+    background-color: #3da4ab;
+    border-radius: 20px 0 0 20px;
+    border-right: 5px solid #fff;
+}
+
+.notice-details {
+    background-color: #fe9c8f;
+    border-radius: 0 20px 20px 0;
+}
+
+.in-service-members {
+    height: 420px;
+    overflow-y: auto;
+}
+
+.waiting-member {
+    height: 420px;
+    overflow-y: auto;
+}
+.add-in-service,
+.add-waiting-member {
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+}
+
+.edit-notice {
+    position: absolute;
+    right: 3%;
+    top: 25%;
+}
+
+.add-in-service button,
+.add-waiting-member button,
+.edit-notice button {
+    font-size: 20px;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: #fff;
+    color: #2ecc71;
+    border: 0;
+}
+
+#live-time {
+    font-size: 35px;
+    font-weight: 600;
+}
